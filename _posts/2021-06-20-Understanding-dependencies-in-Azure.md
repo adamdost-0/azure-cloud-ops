@@ -16,7 +16,7 @@ When building Azure enviornments it's important to understand what components go
 
 ## Why build it via Code vs. Portal?
 
-Generating new Azure resources through the portal is a great way to start to learn Azure. However once you start building out production enterprise enviornment's you'll find common naming conventions will help you determine what resources are associated to each other. See Boston University's Data Services 
+Generating new Azure resources through the portal is a great way to start to learn Azure. However once you start building out production enterprise enviornment's you'll find common naming conventions will help you determine what resources are associated to each other.
 
 ## What goes into building a VM in Azure?
 
@@ -87,7 +87,7 @@ resource "azurerm_managed_disk" "COPS-DISK-01" {
 
 ### VM Compute SKU
 
-Azure is home to a family of SKU's that can be mapped to the workload you're moving to the Cloud. Whether it's Memory optimized, Burstable or High Performance Compute there's a SKU for you. Once you have decided on the SKU family you can go ahead and deploy your compute resources with the DISK and NETWORK portion completed above. 
+Azure is home to a family of SKU's that can be mapped to the workload you're moving to the Cloud. Whether it's Memory optimized, Burstable or High Performance Compute there's a SKU for you. Once you have decided on the SKU family you can go ahead and deploy your compute resources with the DISK and NETWORK portion completed above.
 
 ````terraform
 resource "azurerm_virtual_machine" "VM" {
@@ -136,6 +136,6 @@ resource "azurerm_virtual_machine_data_disk_attachment" "DATA-DISK-01" {
 
 ### Deployment
 
-Leverag Azure CloudShell or your own AzCLI to authenticate and perform the deployement above but **ONLY** do the VM Deployment step after you've verified your network requirements and which subnet the VM in question will need to be located. By not deploying the compute resource you can easily move the NIC around and re-deploy the environment with little time in between!
+Leverage Azure CloudShell or your own AzCLI to authenticate and perform the deployement above but **ONLY** do the VM Deployment step after you've verified your network requirements and which subnet the VM in question will need to be located. By not deploying the compute resource you can easily move the NIC around and re-deploy the environment with little time in between!
 
 Good luck to all those starting in Azure!
