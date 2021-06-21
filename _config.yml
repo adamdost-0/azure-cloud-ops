@@ -111,3 +111,7 @@ defaults:
 category_archive:
   type: liquid
   path: /categories/
+
+posts_archive:
+  type: liquid
+  path: /posts/
