@@ -10,7 +10,7 @@ tags:
   - code
 ---
 
-When beginning your cloud journey in Azure you'll find more value in investing in resource management and inheriting their current security policy into the Cloud for a smoother migrataion. To help start that process let's talk about Azure Management Groups and how they can empower you to do more inside of your org.
+When beginning your cloud journey in Azure you'll find more value in investing in resource management and inheriting their current security policy into the Cloud for a smoother migration. To help start that process let's talk about Azure Management Groups and how they can empower you to do more inside of your org.
 
 Management Groups are an Azure resource that allows you to catalog Azure subscriptions and other management groups inside of it for an inhertiable policy. A common example is if there's a security policy that **everyone** would need to inherit then assigning it at the top level would be most efficient in continously monitoring and enforcing rules in the environmnent! Permissions work in a similar fashion if you assign someone a role at the management group level then all child resources underneath it will inherit that permission down to the resource level. A common example that Microsoft uses is department level management groups that each manage their own subscription. 
 
