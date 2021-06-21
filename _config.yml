@@ -58,7 +58,7 @@ plugins:
 author:
   name   : "Adam Dost"
   avatar : "/assets/images/bio-photo.jpg"
-  bio    : "Just trying to resolve blockers for those who are trying to strive for success"
+  bio    : "Just trying to resolve blockers for those who are trying to strive for success. That and convince others to learn Linux."
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"
