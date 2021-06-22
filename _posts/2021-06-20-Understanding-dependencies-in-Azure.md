@@ -55,7 +55,7 @@ resource "azurerm_network_interface" "NIC-01" {
     resource_group_name         = azurerm_resource_group.example.name
 
     ip_configuration {
-        name                          = "ipcofnig"
+        name                          = "ipconfig"
         subnet_id                     = "${azurerm_subnet.SUBNET-01.id}"
         private_ip_address_allocation = "static"
         private_ip_address            = "10.0.1.40"
