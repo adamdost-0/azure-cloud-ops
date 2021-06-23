@@ -1,7 +1,8 @@
 ---
 title: "Containers on Azure!"
 categories:
-  - blog
+  - containers
+  - azure
 tags:
   - welcome
   - update
