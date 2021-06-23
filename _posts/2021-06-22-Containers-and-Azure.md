@@ -1,5 +1,5 @@
 ---
-title: "Contaainers on Azure!"
+title: "Containers on Azure!"
 categories:
   - blog
 tags:
