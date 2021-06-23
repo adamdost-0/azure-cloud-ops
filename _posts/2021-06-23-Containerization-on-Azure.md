@@ -1,5 +1,5 @@
 ---
-title: "Containerization on Azure"
+title: "Containers on Azure"
 categories:
   - Kubernetes
   - Azure
