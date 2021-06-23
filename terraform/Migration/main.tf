@@ -257,92 +257,6 @@ resource "azurerm_network_interface" "USDOD-HUB-NIC" {
     }
 }
 
-#### Virtual Machine's
-
-resource "azurerm_linux_virtual_machine" "USDOD-SPOKE2-VM-1" {
-  name                = "USDOD-SPOKE2-VM-1"
-  resource_group_name = azurerm_resource_group.USDOD-spoke2.name
-  location            = azurerm_resource_group.USDOD-spoke2.location
-  size                = "Standard_F2"
-  admin_username      = "adamdost"
-  network_interface_ids = [
-    azurerm_network_interface.USDOD-Spoke2-NIC.id,
-  ]
-
-  admin_ssh_key {
-    username   = "adamdost"
-    public_key = file("~/.ssh/id_rsa.pub")
-  }
-
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
-    version   = "latest"
-  }
-}
-
-
-resource "azurerm_linux_virtual_machine" "USDOD-SPOKE1-VM-1" {
-  name                = "USDOD-SPOKE1-VM-1"
-  resource_group_name = azurerm_resource_group.USDOD-spoke1.name
-  location            = azurerm_resource_group.USDOD-spoke1.location
-  size                = "Standard_F2"
-  admin_username      = "adamdost"
-  network_interface_ids = [
-    azurerm_network_interface.USDOD-Spoke1-NIC.id,
-  ]
-
-  admin_ssh_key {
-    username   = "adamdost"
-    public_key = file("~/.ssh/id_rsa.pub")
-  }
-
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
-    version   = "latest"
-  }
-}
-
-resource "azurerm_linux_virtual_machine" "USDOD-HUB-VM-1" {
-  name                = "USDOD-HUB-VM-1"
-  resource_group_name = azurerm_resource_group.USDOD-hub.name
-  location            = azurerm_resource_group.USDOD-hub.location
-  size                = "Standard_F2"
-  admin_username      = "adamdost"
-  network_interface_ids = [
-    azurerm_network_interface.USDOD-HUB-NIC.id,
-  ]
-
-  admin_ssh_key {
-    username   = "adamdost"
-    public_key = file("~/.ssh/id_rsa.pub")
-  }
-
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
-    version   = "latest"
-  }
-}
 
 resource "azurerm_bastion_host" "AZ-BST-01" {
   name                = "AZ-BST-01"
@@ -355,3 +269,4 @@ resource "azurerm_bastion_host" "AZ-BST-01" {
     public_ip_address_id = azurerm_public_ip.pip3.id
   }
 }
+
