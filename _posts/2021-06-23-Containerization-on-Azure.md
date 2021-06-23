@@ -8,7 +8,6 @@ tags:
   - kubernetes
 ---
 
-
 Azure Kubernetes Service (AKS) is Microsoft's cloud service offering that helps bring the power of Kubernetes to Azure. But it's not your only option when looking to run containers on Azure today in a PaaS setting. Here are your three choices for running containers on Azure today!
 
 1. Azure Container Instance
