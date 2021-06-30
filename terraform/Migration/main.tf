@@ -18,6 +18,22 @@ variable "sharedKey" {
     type = string
 }
 
+variable "HUB-VM-NAME" {
+    type = list
+    default = ["HUB-VM-01","HUB-VM-02","HUB-VM-03","HUB-VM-04"]
+}
+
+variable "SPOKE1-VM-NAME" {
+    type = list
+    default = ["SPOKE1-VM-01","SPOKE1-VM-02","SPOKE1-VM-03","SPOKE1-VM-04"]
+}
+
+variable "SPOKE2-VM-NAME" {
+    type = list
+    default = ["SPOKE2-VM-01","SPOKE2-VM-02","SPOKE2-VM-03","SPOKE2-VM-04"]
+
+}
+
 provider "azurerm" {
   features {}
   subscription_id = var.subscription_id
@@ -29,244 +45,195 @@ provider "azurerm" {
 
 data "azurerm_client_config" "current" {}
 
-resource "azurerm_resource_group" "USDOD-spoke1" {
-  name     = "USDOD-spoke1"
+#########################
+# Modules 
+# Resource Group
+# Network
+# Recovery Vault
+# Backup Policy
+# Enroll in Vault
+# Create replicated VM
+########################
+
+
+resource "azurerm_resource_group" "USDOD-SPOKE1" {
+  name     = "USDOD-SPOKE1"
   location = "usdodcentral"
 }
 
-resource "azurerm_resource_group" "USDOD-spoke2" {
-  name     = "USDOD-spoke2"
+resource "azurerm_resource_group" "USDOD-SPOKE2" {
+  name     = "USDOD-SPOKE2"
   location = "usdodcentral"
 }
 
-resource "azurerm_resource_group" "USDOD-hub" {
-  name     = "USDOD-hub"
+resource "azurerm_resource_group" "USDOD-HUB" {
+  name     = "USDOD-HUB"
   location = "usdodcentral"
 }
 
-
-#### VNETS #####
-
-resource "azurerm_virtual_network" "USDOD-hub-vnt-01" {
-  name                = "USDOD-hub-vnt-1"
-  location            = azurerm_resource_group.USDOD-hub.location
-  resource_group_name = azurerm_resource_group.USDOD-hub.name
-  address_space       = ["10.0.0.0/24"]
+resource "azurerm_resource_group" "USGOV-SPOKE1" {
+  name     = "USGOV-SPOKE1"
+  location = "usgovvirginia"
 }
 
-resource "azurerm_virtual_network" "spoke-vnt-01" {
-  name                = "spoke-vnt-1"
-  location            = azurerm_resource_group.USDOD-spoke1.location
-  resource_group_name = azurerm_resource_group.USDOD-spoke1.name
-  address_space       = ["10.0.1.0/24"]
+resource "azurerm_resource_group" "USGOV-SPOKE2" {
+  name     = "USGOV-SPOKE2"
+  location = "usgovvirginia"
 }
 
-resource "azurerm_virtual_network" "spoke-vnt-02" {
-  name                = "spoke-vnt-2"
-  location            = azurerm_resource_group.USDOD-spoke2.location
-  resource_group_name = azurerm_resource_group.USDOD-spoke2.name
-  address_space       = ["10.0.2.0/24"]
-}
-
-#### SUBNETS #####
-
-#### USDOD-HUB GATEWAY SUBNET
-resource "azurerm_subnet" "USDOD-HUB-GatewaySubnet" {
-  name                 = "GatewaySubnet"
-  resource_group_name  = azurerm_resource_group.USDOD-hub.name
-  virtual_network_name = azurerm_virtual_network.USDOD-hub-vnt-01.name
-  address_prefixes     = ["10.0.0.0/27"]
-}
-
-#### SPOKE 2 GATEWAY SUBNET
-resource "azurerm_subnet" "SPOKE-GatewaySubnet" {
-  name                 = "GatewaySubnet"
-  resource_group_name  = azurerm_resource_group.USDOD-spoke2.name
-  virtual_network_name = azurerm_virtual_network.spoke-vnt-02.name
-  address_prefixes     = ["10.0.2.0/27"]
-}
-
-#### SPOKE 1 SUBNET
-resource "azurerm_subnet" "USDOD-Spoke1-Subnet" {
-  name                 = "Spoke-SUB1"
-  resource_group_name  = azurerm_resource_group.USDOD-spoke1.name
-  virtual_network_name = azurerm_virtual_network.spoke-vnt-01.name
-  address_prefixes     = ["10.0.1.32/27"]
-}
-
-resource "azurerm_subnet" "USDOD-Spoke1-Bastion-Subnet" {
-  name                 = "AzureBastionSubnet"
-  resource_group_name  = azurerm_resource_group.USDOD-spoke1.name
-  virtual_network_name = azurerm_virtual_network.spoke-vnt-01.name
-  address_prefixes     = ["10.0.1.64/27"]
-}
-
-#### SPOKE 2 SUBNET
-
-resource "azurerm_subnet" "USDOD-Spoke2-Subnet" {
-  name                 = "Spoke-SUB2"
-  resource_group_name  = azurerm_resource_group.USDOD-spoke2.name
-  virtual_network_name = azurerm_virtual_network.spoke-vnt-02.name
-  address_prefixes     = ["10.0.2.32/27"]
-}
-
-#### USDOD-HUB SUBNET
-
-resource "azurerm_subnet" "USDOD-HUB-Subnet" {
-  name                 = "USDOD-Hub-SUB1"
-  resource_group_name  = azurerm_resource_group.USDOD-hub.name
-  virtual_network_name = azurerm_virtual_network.USDOD-hub-vnt-01.name
-  address_prefixes     = ["10.0.0.32/27"]
-}
-
-#### PUBLIC IP
-
-resource "azurerm_public_ip" "pip" {
-  name                = "PIP-01"
-  location            = azurerm_resource_group.USDOD-hub.location
-  resource_group_name = azurerm_resource_group.USDOD-hub.name
-
-  allocation_method = "Dynamic"
-}
-
-resource "azurerm_public_ip" "pip2" {
-  name                = "PIP-02"
-  location            = azurerm_resource_group.USDOD-spoke1.location
-  resource_group_name = azurerm_resource_group.USDOD-spoke1.name
-
-  allocation_method = "Dynamic"
-}
-
-resource "azurerm_public_ip" "pip3" {
-  name                = "PIP-03"
-  location            = azurerm_resource_group.USDOD-spoke1.location
-  resource_group_name = azurerm_resource_group.USDOD-spoke1.name
-  allocation_method = "Static"
-  sku = "Standard"
+resource "azurerm_resource_group" "USGOV-HUB" {
+  name     = "USGOV-HUB"
+  location = "usgovvirginia"
 }
 
 
-
-#### GATEWAY
-
-resource "azurerm_virtual_network_gateway" "vnt-gwy" {
-  name                = "VNT-GWY-01"
-  location            = azurerm_resource_group.USDOD-hub.location
-  resource_group_name = azurerm_resource_group.USDOD-hub.name
-
-  type     = "Vpn"
-  vpn_type = "RouteBased"
-
-  active_active = false
-  enable_bgp    = true
-  sku           = "Basic"
-
-  ip_configuration {
-    name                          = "vnetGatewayConfig"
-    public_ip_address_id          = azurerm_public_ip.pip.id
-    private_ip_address_allocation = "Dynamic"
-    subnet_id                     = azurerm_subnet.USDOD-HUB-GatewaySubnet.id
-  }
-}
-
-resource "azurerm_virtual_network_gateway" "vnt-gwy2" {
-  name                = "VNT-GWY-02"
-  location            = azurerm_resource_group.USDOD-spoke2.location
-  resource_group_name = azurerm_resource_group.USDOD-spoke2.name
-
-  type     = "Vpn"
-  vpn_type = "RouteBased"
-
-  active_active = false
-  enable_bgp    = true
-  sku           = "Basic"
-
-  ip_configuration {
-    name                          = "vnetGatewayConfig"
-    public_ip_address_id          = azurerm_public_ip.pip2.id
-    private_ip_address_allocation = "Dynamic"
-    subnet_id                     = azurerm_subnet.SPOKE-GatewaySubnet.id
-  }
-}
-
-#### CONNECTION
-
-resource "azurerm_virtual_network_gateway_connection" "USDOD-hub_to_spoke" {
-  name                = "USDOD-HUB-TO-SPOKE"
-  location            = azurerm_resource_group.USDOD-hub.location
-  resource_group_name = azurerm_resource_group.USDOD-hub.name
-
-  type                            = "Vnet2Vnet"
-  virtual_network_gateway_id      = azurerm_virtual_network_gateway.vnt-gwy.id
-  peer_virtual_network_gateway_id = azurerm_virtual_network_gateway.vnt-gwy2.id
-
-  shared_key = var.sharedKey
-}
-
-#### NIC
-
-resource "azurerm_network_interface" "USDOD-Spoke1-NIC" {
-    name                        = "USDOD-SPOKE1-NIC"
-    location                    = azurerm_resource_group.USDOD-spoke1.location
-    resource_group_name         = azurerm_resource_group.USDOD-spoke1.name
-
-    ip_configuration {
-        name                          = "ipcofnig"
-        subnet_id                     = "${azurerm_subnet.USDOD-Spoke1-Subnet.id}"
-        private_ip_address_allocation = "static"
-        private_ip_address            = "10.0.1.40"
+module "dod-hub-network" {
+  source = "./modules/network"
+  resource_group_name = azurerm_resource_group.USDOD-HUB.name
+  location = azurerm_resource_group.USDOD-HUB.location
+  vnet_name = "USDOD-HUB-VNT-1"
+  address_spaces = ["10.0.0.0/24"]
+  subnets = [
+    {
+      name : "GatewaySubnet"
+      address_prefixes : ["10.0.0.0/27"]
+    },
+    {
+      name : "HUB-SUBNET-1"
+      address_prefixes : ["10.0.0.32/27"]
     }
+  ]
 }
 
-resource "azurerm_network_interface" "USDOD-Spoke1-NIC-2" {
-    name                        = "USDOD-SPOKE1-NIC-2"
-    location                    = azurerm_resource_group.USDOD-spoke1.location
-    resource_group_name         = azurerm_resource_group.USDOD-spoke1.name
-
-    ip_configuration {
-        name                          = "ipcofnig"
-        subnet_id                     = "${azurerm_subnet.USDOD-Spoke1-Subnet.id}"
-        private_ip_address_allocation = "static"
-        private_ip_address            = "10.0.1.41"
+module "dod-spoke1-network" {
+  source = "./modules/network"
+  resource_group_name = azurerm_resource_group.USDOD-SPOKE1.name
+  location = azurerm_resource_group.USDOD-SPOKE1.location
+  vnet_name = "USDOD-SPOKE-VNT-1"
+  address_spaces = ["10.0.1.0/24"]
+  subnets = [
+    {
+      name : "GatewaySubnet"
+      address_prefixes : ["10.0.1.0/27"]
+    },
+    {
+      name : "SPOKE1-SUBNET-1"
+      address_prefixes : ["10.0.1.32/27"]
     }
+  ]
 }
 
-resource "azurerm_network_interface" "USDOD-Spoke2-NIC" {
-    name                        = "USDOD-SPOKE2-NIC"
-    location                    = azurerm_resource_group.USDOD-spoke2.location
-    resource_group_name         = azurerm_resource_group.USDOD-spoke2.name
-
-    ip_configuration {
-        name                          = "ipconfig"
-        subnet_id                     = "${azurerm_subnet.USDOD-Spoke2-Subnet.id}"
-        private_ip_address_allocation = "static"
-        private_ip_address            = "10.0.2.40"
+module "dod-spoke2-network" {
+  source = "./modules/network"
+  resource_group_name = azurerm_resource_group.USDOD-SPOKE2.name
+  location = azurerm_resource_group.USDOD-SPOKE2.location
+  vnet_name = "USDOD-SPOKE-VNT-2"
+  address_spaces = ["10.0.2.0/24"]
+  subnets = [
+    {
+      name : "GatewaySubnet"
+      address_prefixes : ["10.0.2.0/27"]
+    },
+    {
+      name : "SPOKE2-SUBNET-1"
+      address_prefixes : ["10.0.2.32/27"]
     }
+  ]
 }
 
-resource "azurerm_network_interface" "USDOD-HUB-NIC" {
-    name                        = "USDOD-HUB-NIC"
-    location                    = azurerm_resource_group.USDOD-hub.location
-    resource_group_name         = azurerm_resource_group.USDOD-hub.name
-
-    ip_configuration {
-        name                          = "ipconfig"
-        subnet_id                     = "${azurerm_subnet.USDOD-HUB-Subnet.id}"
-        private_ip_address_allocation = "static"
-        private_ip_address            = "10.0.0.40"
+module "gov-hub-network" {
+  source = "./modules/network"
+  resource_group_name = azurerm_resource_group.USGOV-HUB.name
+  location = azurerm_resource_group.USGOV-HUB.location
+  vnet_name = "USGOV-HUB-VNT-1"
+  address_spaces = ["10.1.0.0/24"]
+  subnets = [
+    {
+      name : "GatewaySubnet"
+      address_prefixes : ["10.1.0.0/27"]
+    },
+    {
+      name : "HUB-SUBNET-1"
+      address_prefixes : ["10.1.0.32/27"]
     }
+  ]
 }
 
-
-resource "azurerm_bastion_host" "AZ-BST-01" {
-  name                = "AZ-BST-01"
-  location            = azurerm_resource_group.USDOD-spoke1.location
-  resource_group_name = azurerm_resource_group.USDOD-spoke1.name
-
-  ip_configuration {
-    name                 = "configuration"
-    subnet_id            = azurerm_subnet.USDOD-Spoke1-Bastion-Subnet.id
-    public_ip_address_id = azurerm_public_ip.pip3.id
-  }
+module "gov-spoke1-network" {
+  source = "./modules/network"
+  resource_group_name = azurerm_resource_group.USGOV-SPOKE1.name
+  location = azurerm_resource_group.USGOV-SPOKE1.location
+  vnet_name = "USGOV-SPOKE-VNT-1"
+  address_spaces = ["10.1.1.0/24"]
+  subnets = [
+    {
+      name : "GatewaySubnet"
+      address_prefixes : ["10.1.1.0/27"]
+    },
+    {
+      name : "SPOKE1-SUBNET-1"
+      address_prefixes : ["10.1.1.32/27"]
+    }
+  ]
 }
 
+module "gov-spoke2-network" {
+  source = "./modules/network"
+  resource_group_name = azurerm_resource_group.USGOV-SPOKE2.name
+  location = azurerm_resource_group.USGOV-SPOKE2.location
+  vnet_name = "USGOV-SPOKE-VNT-2"
+  address_spaces = ["10.1.2.0/24"]
+  subnets = [
+    {
+      name : "GatewaySubnet"
+      address_prefixes : ["10.1.2.0/27"]
+    },
+    {
+      name : "SPOKE2-SUBNET-1"
+      address_prefixes : ["10.1.2.32/27"]
+    }
+  ]
+}
+
+module "recovery-vault" {
+  source = "./modules/backup-vault"
+  resource_group_name = azurerm_resource_group.USGOV-HUB.name
+  location = "usgovvirginia"
+  vault_name = "USGOV-VAULT-01"
+
+}
+
+module "hub-vm-deploy"{
+  source = "./modules/virtual-machine"
+  VMs = var.HUB-VM-NAME
+  location = azurerm_resource_group.USDOD-HUB.location
+  resource_group_name = azurerm_resource_group.USDOD-HUB.name
+  subnetId = module.dod-hub-network.subnet_ids["HUB-SUBNET-1"]
+}
+
+module "spoke1-vm-deploy" {
+  source = "./modules/virtual-machine"
+  VMs = var.SPOKE1-VM-NAME
+  resource_group_name = azurerm_resource_group.USDOD-SPOKE1.name
+  location = azurerm_resource_group.USDOD-SPOKE1.location
+  subnetId = module.dod-spoke1-network.subnet_ids["SPOKE1-SUBNET-1"]
+}
+
+module "spoke2-vm-deploy"{
+  source = "./modules/virtual-machine"
+  VMs = var.SPOKE2-VM-NAME
+  resource_group_name = azurerm_resource_group.USDOD-SPOKE2.name
+  location = azurerm_resource_group.USDOD-SPOKE2.location
+  subnetId = module.dod-spoke2-network.subnet_ids["SPOKE2-SUBNET-1"]
+} 
+
+module "site-recovery-hub" {
+    source = "./modules/site-recovery"
+    vault_name = "USGOV-VAULT-01"
+    primary_resource_group_name = azurerm_resource_group.USDOD-HUB.name
+    primary_location = azurerm_resource_group.USDOD-HUB.location
+    secondary_resource_group_name = azurerm_resource_group.USGOV-HUB.name
+    secondary_location = azurerm_resource_group.USGOV-HUB.location
+    secondary_rgp_id = azurerm_resource_group.USGOV-HUB.id
+    vm_id = module.hub-vm-deploy.vm-ids
+}
