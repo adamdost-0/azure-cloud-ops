@@ -101,6 +101,10 @@ module "dod-hub-network" {
     {
       name : "HUB-SUBNET-1"
       address_prefixes : ["10.0.0.32/27"]
+    },
+    {
+      name : "AzureBastionSubnet"
+      address_prefixes : ["10.0.0.64/27"]
     }
   ]
 }
@@ -155,6 +159,10 @@ module "gov-hub-network" {
     {
       name : "HUB-SUBNET-1"
       address_prefixes : ["10.1.0.32/27"]
+    },
+    {
+      name : "AzureBastionSubnet"
+      address_prefixes : ["10.1.0.64/27"]
     }
   ]
 }
