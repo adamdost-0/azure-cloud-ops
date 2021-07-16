@@ -1,0 +1,9 @@
+subscription_id = "" #GUID of your Subscription you are targeting
+client_id = "" # App Registration ID
+client_secret = "" # App Registration Secret
+tenant_id = "" # Tenant ID found in AzureAD
+azureRegion = "USGovernment" # Terraform AzureRm authentication target - 
+primaryRegionAcronym = "" #Sample: USDOD
+secondaryRegionAcronym = "" #Sample: USGOV
+primaryRegion = "" #Sample: usgovvirginia
+secondaryRegion = "" #Sample: usdodcentral

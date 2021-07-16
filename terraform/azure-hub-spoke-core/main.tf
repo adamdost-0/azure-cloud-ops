@@ -14,9 +14,6 @@ variable "azureRegion" {
     type = string
 }
 
-variable "sharedKey" {
-    type = string
-}
 
 variable "HUB-VM-NAME" {
     type = list
@@ -46,6 +43,9 @@ variable "secondaryRegion" {
     type = string
 }
 
+variable "resource-prefix" {
+  type = string  
+}
 provider "azurerm" {
   features {}
   subscription_id = var.subscription_id
@@ -57,6 +57,18 @@ provider "azurerm" {
 
 data "azurerm_client_config" "current" {}
 
+locals {
+  rgp-name = [format("%s%s",var.resource-prefix,"COR-RGP-01"),format("%s%s",var.resource-prefix,"NET-RGP-01"),format("%s%s",var.resource-prefix,"APP-RGP-01")]
+}
+
+module "gov-lz-hub" {
+  source = "./modules/resource-group"
+  resource_group_name = local.rgp-name
+  azureRegion = var.secondaryRegion
+}
+
+
+
 #########################
 # Modules 
 # Resource Group
@@ -67,35 +79,21 @@ data "azurerm_client_config" "current" {}
 # Create replicated VM
 ########################
 
+/*
 
-resource "azurerm_resource_group" "PRI-SPOKE1" {
-  name     = "${var.primaryRegionAcronym}-SPOKE1"
-  location = var.primaryRegion
+
+
+
+module "dod-azure-rgp" {
+  source = "./modules/resource-group"
+  resource_group_name = ["USDOD-HUB-01","USDOD-SPOKE-01","USDOD-SPOKE-02"]
+  azureRegion = "usdodcentral"
 }
 
-resource "azurerm_resource_group" "PRI-SPOKE2" {
-  name     = "${var.primaryRegionAcronym}-SPOKE2"
-  location = var.primaryRegion
-}
-
-resource "azurerm_resource_group" "PRI-HUB" {
-  name     = "${var.primaryRegionAcronym}-HUB"
-  location = var.primaryRegion
-}
-
-resource "azurerm_resource_group" "SEC-SPOKE1" {
-  name     = "${var.secondaryRegionAcronym}-SPOKE1"
-  location = var.secondaryRegion
-}
-
-resource "azurerm_resource_group" "SEC-SPOKE2" {
-  name     = "${var.secondaryRegionAcronym}-SPOKE2"
-  location = var.secondaryRegion
-}
-
-resource "azurerm_resource_group" "SEC-HUB" {
-  name     = "${var.secondaryRegionAcronym}-HUB"
-  location = var.secondaryRegion
+module "gov-azure-rgp" {
+  source = "./modules/resource-group"
+  resource_group_name = ["USGOV-HUB-01","USGOV-SPOKE-01","USGOV-SPOKE-02"]
+  azureRegion = "usgovvirginia"
 }
 
 
@@ -257,3 +255,4 @@ module "site-recovery-hub" {
     secondary_rgp_id = azurerm_resource_group.SEC-HUB.id
     vm_id = module.hub-vm-deploy.vm-ids
 }
+*/
