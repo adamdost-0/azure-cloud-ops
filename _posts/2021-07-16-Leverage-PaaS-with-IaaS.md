@@ -12,11 +12,11 @@ When you begin deploying resources into the cloud those resources now have progr
 
 ## Manage VM's with Azure PaaS resources
 
-The most common roadblock in Cloud migrations comes from this question
+The most common roadblock in cloud migrations comes from this question
 
 > What's the point in moving VM's from On-Prem to Azure if I'm still stuck with managing VM's?
 
-And that's where we start down the discovery path of how things are being done today and they can be improved in the future. Especially when we talk about operations and how can we not only develop our architecture but secure it and operate it in a way that allows us to focus on other problems. Here are going the Azure Platform benefits you can get when migrating a VM to Azure
+And that's where we start down the discovery path of how things are being done today and they can be improved in the future. When we talk about VM's in particular the management and sustainment of those resources needs to be significantly improved for their to be value in the cloud. Even something as simple as a VM migration the Azure Platform contains myriads of benefits that you can leverage such as....
 
 * Credential Management through Azure **Key Vault**
 * Continous Monitoring and alerting with Azure **Monitor** and **Security Center**
@@ -28,8 +28,8 @@ And more! There's more to a VM migration in Azure than just running in our data 
 
 ## Technology cannot fix culture 
 
-The Azure platform exists to help empower the enterprise to re-think how they handle operations from a day-to-day perspective and a 1 year plan perspective. The most common question that will get asked is 
+The Azure platform exists to help **empower** the enterprise to re-think how they handle operations from a day-to-day perspective and a 1 year plan perspective. The most common question that will get asked is 
 
 > With the Cloud can we do more with less?
 
-And the answer is yes. The Cloud can help enable an enterprise to re-assign their staff to other tasks and move off from managing just basic operations and begin focusing on specialized projects. **However** if the culture in the operations side carries the bad practices that were prevalent On-Prem then no amount of technical modernization will be fixed when coming to the Cloud. I **highly** encourage all who are reading this blog to visit the [Cloud Adoption Framework](aka.ms/caf) and begin to re-think what the System Administrator can and can't do as part of their roles and responsibilities. 
+And the answer is yes. The Cloud can help enable an enterprise to re-assign their staff to other tasks and move off from managing just basic operations and begin focusing on specialized projects. **However** if the culture in the operations side carries over to the cloud then the platform's value to your organization will be lost. I **highly** encourage all who are reading this blog to visit the [Cloud Adoption Framework](aka.ms/caf) and begin to re-think what the System Administrator can and can't do as part of their roles and responsibilities. 
