@@ -3,7 +3,7 @@ title: "Leverage PaaS to make your IaaS easier"
 categories:
   - azure
 tags:
-  - syadmin
+  - sysadmin
 ---
 
 ## Everything now has an API
