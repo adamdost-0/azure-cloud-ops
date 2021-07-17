@@ -8,7 +8,7 @@ tags:
 
 ## Everything now has an API
 
-When you begin deploying resources into the cloud those resources now have programmable interfacea that you can begin to manipulate at scale. We begin looking at our infrastructure as a manipulatable object and not some monolothic device that requires some KVM to manage it. We're now able to "zoom-out" and look at how we're managing our resources and interact with them at scale.
+When you begin deploying resources into the cloud those resources now have programmable interface that you can begin to manipulate at scale. We begin looking at our infrastructure as a manipulatable object and not some monolothic device that requires some KVM to manage it. We're now able to "zoom-out" and look at how we're managing our resources and interact with them at scale.
 
 ## Manage VM's with Azure PaaS resources
 
