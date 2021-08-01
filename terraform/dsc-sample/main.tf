@@ -1,42 +1,42 @@
 variable "subscription_id" {
-    type = string
+  type = string
 }
 variable "client_id" {
-    type = string
+  type = string
 }
 variable "client_secret" {
-    type = string
+  type = string
 }
 variable "tenant_id" {
-    type = string
+  type = string
 }
 variable "azureRegion" {
-    type = string
+  type = string
 }
 variable "primaryRegionAcronym" {
-    type = string
+  type = string
 }
 variable "secondaryRegionAcronym" {
-    type = string
+  type = string
 }
 variable "primaryRegion" {
-    type = string
+  type = string
 }
 variable "secondaryRegion" {
-    type = string
+  type = string
 }
 variable "resource-prefix" {
-  type = string  
+  type = string
 }
 
 variable "RGP-MAPPING" {
-  type = map
+  type = map(any)
   default = {
-    core-svc = "COR-GV-1"
+    core-svc    = "COR-GV-1"
     network-svc = "NET-GV-1"
-    app-svc = "APP-GV-1"
+    app-svc     = "APP-GV-1"
   }
-  
+
 }
 
 provider "azurerm" {
@@ -52,12 +52,12 @@ data "azurerm_client_config" "current" {}
 
 
 module "gov-azure-rgp" {
-  source = "./resource-group"
-  resource_group_name = ["COR-GV-1","APP-GV-1","NET-GV-1"]
-  azureRegion = var.secondaryRegion
+  source              = "./resource-group"
+  resource_group_name = ["COR-GV-1", "APP-GV-1", "NET-GV-1"]
+  azureRegion         = var.secondaryRegion
 }
 
-resource "azurerm_automation_account" "az-aaa-01" {
+resource "azurerm_automation_account" "az_aaa_01" {
   name                = "AZ-GV-AAA-01"
   location            = var.secondaryRegion
   resource_group_name = var.RGP-MAPPING["core-svc"]
@@ -65,16 +65,13 @@ resource "azurerm_automation_account" "az-aaa-01" {
   sku_name = "Basic"
 
   tags = {
-    environment = "DSC-AAA-01"
+    environment = "Development"
   }
 }
 
-resource "azurerm_automation_module" "example" {
-  name                    = "NetworkingDSC"
+module "automation_module_import" {
+  source                  = "./automation"
   resource_group_name     = var.RGP-MAPPING["core-svc"]
-  automation_account_name = azurerm_automation_account.az-aaa-01.name
-
-  module_link {
-    uri = "https://psg-prod-eastus.azureedge.net/packages/networkingdsc.8.2.0.nupkg"
-  }
+  automation_account_name = azurerm_automation_account.az_aaa_01.name
+  module_list             = ["xActiveDirectory", "Az.Accounts", "xPowerShellExecutionPolicy", "xPSDesiredStateConfiguration", "AuditPolicyDsc", "AuditSystemDsc", "AccessControlDsc", "ComputerManagementDsc", "FileContentDsc", "GPRegistryPolicyDsc", "PSDscResources", "SecurityPolicyDsc", "SqlServerDsc", "WindowsDefenderDsc", "xDnsServer", "xWebAdministration", "CertificateDsc", "nx", "PowerSTIG"]
 }

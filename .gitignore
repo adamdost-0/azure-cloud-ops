@@ -31,4 +31,4 @@ vars.tfvars
 # example: *tfplan*
 Gemfile.lock
 
-terraform/Migration
+.DS_Store

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.451.19169",
+      "templateHash": "6954788591022657850"
+    }
+  },
+  "parameters": {
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "AZ-EUS-DOD-AF-CCE-WEAPS-L-IL6-VNET-01",
+      "metadata": {
+        "description": "NAME OF VNET THAT HOSTS THE SUBNET"
+      }
+    },
+    "vnetRgp": {
+      "type": "string",
+      "defaultValue": "NET-RGP-01",
+      "metadata": {
+        "description": "NAME OF RESOURCE GROUP HOSTING THE VNET"
+      }
+    }
+  },
+  "functions": [],
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "apiVersion": "2021-02-01",
+      "name": "[format('{0}/PLINK-01', parameters('vnetName'))]",
+      "properties": {
+        "addressPrefix": "10.0.0.32/27",
+        "privateEndpointNetworkPolicies": "Disabled"
+      }
+    }
+  ]
+}
