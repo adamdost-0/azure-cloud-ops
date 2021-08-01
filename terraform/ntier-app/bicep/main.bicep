@@ -1,7 +1,7 @@
 @description('DOCKER IMAGE AND TAG')
 param dockerImageAndTag string = 'app/nginx:latest'
 
-param prefix string = 'AZ-${region_prefix}-DOD-AF-CCE-ACC-${appName}-${environment}'
+param prefix string = 'AZ-${region_prefix}--${appName}-${environment}'
 
 param accessPolicies array = [
   {
@@ -60,8 +60,8 @@ param appName string = ''
   'IL6'
 ])
 @description('DEFINE THE IMPACT LEVEL OF THE APPLICATION')
-
 param impact string = 'IL4'
+
 @allowed([
   'L'
   'D'
@@ -176,6 +176,7 @@ var sql_conn_string = 'Server=tcp:${sql_server.properties.fullyQualifiedDomainNa
 6. Create Azure WebApp MSI to Assign to KVT
 7. Create Azure App Service Config 
 8. Drop Private Links into the VNET so that the resources are accessible insdie of the VNET Per regional vnet integration
+
 */
 
 
