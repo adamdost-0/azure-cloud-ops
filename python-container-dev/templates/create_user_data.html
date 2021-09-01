@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <a href="javascript:window.history.go(-1)">Back</a> <!-- Displayed on top of a potentially large JSON response, so it will remain visible -->
+    <h1>Graph - Create User via Flask</h1>
+    {% for key,value in form.items() %}
+    <h2> {{key}}</h2>
+    <p> {{value}}</p>
+    {% endfor %}
+    </body>
+</html>

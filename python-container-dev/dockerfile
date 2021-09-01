@@ -1,0 +1,15 @@
+
+FROM python:3.8-slim-buster
+
+EXPOSE 5000
+
+WORKDIR /app
+
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
+COPY . .
+
+ENV AZURE_CLIENT_ID='c0d77c13-6e01-4b3c-973e-6ba525f0246d' AZURE_CLIENT_SECRET='_v3o.xK~B7ri_3AjLBa8z1njhtqI8693x6' AZURE_TENANT_ID='73fa6115-0183-4404-9d24-b99e17cd11e8'
+
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
