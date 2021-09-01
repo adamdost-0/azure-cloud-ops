@@ -1,5 +1,5 @@
 @description('NAME OF VNET THAT HOSTS THE SUBNET')
-param vnetName string = 'AZ-EUS-VNET-01'
+param vnetName string = 'AZ-EUS-VNET-02'
 @description('NAME OF RESOURCE GROUP HOSTING THE VNET')
 param vnetRgp string = 'NET-RGP-02'
 
@@ -18,6 +18,7 @@ resource plinkSubnet 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = {
     addressPrefix: privateLinkSubnetAddressPrefix
     privateEndpointNetworkPolicies: 'Disabled'
   }
+  
   dependsOn: [
     vnetCreate
   ]
@@ -28,6 +29,16 @@ resource vnetPeeringSubnet 'Microsoft.Network/virtualNetworks/subnets@2021-02-01
   properties: {
     addressPrefix: appSvcSubnetPrefix
     privateEndpointNetworkPolicies: 'Disabled'
+    delegations: [
+      {
+        id: 'webapp'
+        properties: {
+          serviceName: 'Microsoft.Web/serverFarms'
+        }
+        name: 'webapp'
+      }
+    ]
+ 
   }
   dependsOn: [
     plinkSubnet

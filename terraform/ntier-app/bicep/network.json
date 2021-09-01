@@ -1,0 +1,97 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.451.19169",
+      "templateHash": "2744943950545652934"
+    }
+  },
+  "parameters": {
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "AZ-EUS-VNET-03",
+      "metadata": {
+        "description": "NAME OF VNET THAT HOSTS THE SUBNET"
+      }
+    },
+    "vnetRgp": {
+      "type": "string",
+      "defaultValue": "NET-RGP-02",
+      "metadata": {
+        "description": "NAME OF RESOURCE GROUP HOSTING THE VNET"
+      }
+    },
+    "privateLinkSubnetName": {
+      "type": "string",
+      "defaultValue": "PLINK-01"
+    },
+    "privateLinkSubnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/27"
+    },
+    "appSvcSubnetName": {
+      "type": "string",
+      "defaultValue": "vnetRegionalPeering"
+    },
+    "appSvcSubnetPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.32/27"
+    }
+  },
+  "functions": [],
+  "variables": {
+    "plinkSqlDnsZone": "[environment().suffixes.sqlServerHostname]",
+    "plinkRdisDnsZone": "privatelink.redis.cache.windows.net",
+    "plinkStgDnsZone": "[environment().suffixes.storage]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "apiVersion": "2021-02-01",
+      "name": "[format('{0}/{1}', parameters('vnetName'), parameters('privateLinkSubnetName'))]",
+      "properties": {
+        "addressPrefix": "[parameters('privateLinkSubnetAddressPrefix')]",
+        "privateEndpointNetworkPolicies": "Disabled"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "apiVersion": "2021-02-01",
+      "name": "[format('{0}/{1}', parameters('vnetName'), parameters('appSvcSubnetName'))]",
+      "properties": {
+        "addressPrefix": "[parameters('appSvcSubnetPrefix')]",
+        "privateEndpointNetworkPolicies": "Disabled",
+        "delegations": [
+          {
+            "id": "webapp",
+            "properties": {
+              "serviceName": "Microsoft.Web/serverFarms"
+            },
+            "name": "webapp"
+          }
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/{1}', parameters('vnetName'), parameters('privateLinkSubnetName')), '/')[0], split(format('{0}/{1}', parameters('vnetName'), parameters('privateLinkSubnetName')), '/')[1])]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2021-02-01",
+      "name": "[parameters('vnetName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.0.0.0/24"
+          ]
+        }
+      }
+    }
+  ]
+}

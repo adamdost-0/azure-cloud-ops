@@ -147,7 +147,7 @@ param delegatedSubnet string = 'vnetRegionalPeering'
 param vnetName string = 'AZ-EUS-VNET-01'
 
 @description('NAME OF RESOURCE GROUP HOSTING THE VNET')
-param vnetRgp string = 'NET-RGP-02'
+param vnetRgp string = 'AZ-GV-DOD-AF-CCE-CMNSVC-L-IL2-APP-RGP-01'
 
 
 
@@ -255,7 +255,7 @@ resource keyvault 'Microsoft.KeyVault/vaults@2021-04-01-preview' = {
 
 /* Assign Azure SQL Admin password to DB to KVT */
 
-resource sql_pass_kvt 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' = {
+resource sql_pass_kvt 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
   name: '${keyvault.name}/${cmn_prefix}SQL-ADMIN-PWD'
   properties: {
     value: sql_secret
@@ -264,7 +264,7 @@ resource sql_pass_kvt 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' = {
 
 /* Assign Azure SQL Admin User to DB to KVT */
 
-resource sql_user_kvt 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' = {
+resource sql_user_kvt 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
   name: '${keyvault.name}/${cmn_prefix}SQL-ADMIN-USR'
   properties: {
     value: sql_user
@@ -273,7 +273,7 @@ resource sql_user_kvt 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' = {
 
 /* Assign root Azure SQL SERVER URI to KVT */
 
-resource sql_kvt_url 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' = {
+resource sql_kvt_url 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
   name: '${keyvault.name}/${cmn_prefix}SQL-URL'
   tags: tags
   properties: {
@@ -283,7 +283,7 @@ resource sql_kvt_url 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' = {
 
 /* Assign  Azure SQL SERVER Connection String to KVT */
 
-resource sql_conn_url 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' = {
+resource sql_conn_url 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
   name: '${keyvault.name}/${cmn_prefix}SQL-CONN-URL'
   tags: tags
   properties: {
@@ -293,7 +293,7 @@ resource sql_conn_url 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' = {
 
 /* Assign Assign Redis Cache URI to KVT */
 
-resource redis_kvt_url 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' = {
+resource redis_kvt_url 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
   name: '${keyvault.name}/${cmn_prefix}RDIS-URL'
   tags: tags
   properties: {
@@ -303,7 +303,7 @@ resource redis_kvt_url 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' = 
 
 /* Assign Assign Redis Cache Connection String to KVT */
 
-resource redis_conn_url 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' = {
+resource redis_conn_url 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
   name: '${keyvault.name}/${cmn_prefix}RDIS-CONN-URL'
   tags: tags
   properties: {
@@ -430,7 +430,7 @@ resource container_registry 'Microsoft.ContainerRegistry/registries@2019-12-01-p
   ]
 }
 /* Assign Azure Container Registry Admin Pass to KVT */
-resource acr_admin_pass 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' = {
+resource acr_admin_pass 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
   name: '${keyvault.name}/${cmn_prefix}ACR-PWD'
   properties: {
     value: acr_pwd
@@ -441,7 +441,7 @@ resource acr_admin_pass 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' =
 }
 
 /* Assign Azure Container Registry Server URI to Key Vault */
-resource acr_login_server 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' = {
+resource acr_login_server 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
   name: '${keyvault.name}/${cmn_prefix}ACR-LOGIN-SRV'
   properties: {
     value: container_registry.properties.loginServer
@@ -452,7 +452,7 @@ resource acr_login_server 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview'
 }
 
 /* Assign Azure Container Registry Admin User to key vault */
-resource acr_admin_user 'Microsoft.KeyVault/vaults/secrets@2020-04-01-preview' = {
+resource acr_admin_user 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
   name: '${keyvault.name}/${cmn_prefix}ACR-USR'
   properties: {
     value: acr_server_name

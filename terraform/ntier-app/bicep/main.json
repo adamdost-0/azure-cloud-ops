@@ -1,0 +1,716 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.451.19169",
+      "templateHash": "13761365870929117817"
+    }
+  },
+  "parameters": {
+    "dockerImageAndTag": {
+      "type": "string",
+      "defaultValue": "app/nginx:latest",
+      "metadata": {
+        "description": "DOCKER IMAGE AND TAG"
+      }
+    },
+    "cmn_prefix": {
+      "type": "string",
+      "defaultValue": "[format('AZ-{0}-{1}-{2}-{3}-', parameters('region_prefix'), parameters('appName'), parameters('env'), parameters('impact'))]",
+      "metadata": {
+        "description": "COMMON BASELINE PREFIX FOR ALL AZURE RESOURCES CREATED. COMMON NAMING CONVENTION HELPS INVENTORY ASSESSMENTS AND UNDERSTANDING WHERE RESOURCES ARE STORED."
+      }
+    },
+    "accessPolicies": {
+      "type": "array",
+      "defaultValue": [
+        {
+          "tenantId": "[parameters('tenant')]",
+          "objectId": "c06797b1-f6a0-4514-a9e9-e9f4964dec1c",
+          "permissions": {
+            "keys": [
+              "Get",
+              "List",
+              "Update",
+              "Create",
+              "Import",
+              "Delete",
+              "Recover",
+              "Backup",
+              "Restore"
+            ],
+            "secrets": [
+              "Get",
+              "List",
+              "Set",
+              "Delete",
+              "Recover",
+              "Backup",
+              "Restore"
+            ],
+            "certificates": [
+              "Get",
+              "List",
+              "Update",
+              "Create",
+              "Import",
+              "Delete",
+              "Recover",
+              "Backup",
+              "Restore",
+              "ManageContacts",
+              "ManageIssuers",
+              "GetIssuers",
+              "ListIssuers",
+              "SetIssuers",
+              "DeleteIssuers"
+            ]
+          }
+        }
+      ]
+    },
+    "kvt_name": {
+      "type": "string",
+      "defaultValue": "[format('{0}{1}{2}KVT', parameters('region_prefix'), parameters('appName'), parameters('impact'))]",
+      "metadata": {
+        "description": "NAME OF KEYVAULT WHERE ALL AZURE RESOURCE CREDENTIALS WILL BE STORED AND TREATED AS THE SOURCE OF TRUTH FOR ALL CREDENTIALS IN THE ENVIRONMENT. HYPHENS ARE NOT ALLOWED IN THE URL NAME. ENFORCED BY AZURE FABRIC."
+      }
+    },
+    "appName": {
+      "type": "string",
+      "defaultValue": "MSFT",
+      "metadata": {
+        "description": "DEFINE THE APPLICATION NAME"
+      }
+    },
+    "impact": {
+      "type": "string",
+      "defaultValue": "IL2",
+      "metadata": {
+        "description": "DEFINE THE IMPACT LEVEL OF THE APPLICATION"
+      },
+      "allowedValues": [
+        "IL2",
+        "IL4",
+        "IL5",
+        "IL6"
+      ]
+    },
+    "env": {
+      "type": "string",
+      "defaultValue": "L",
+      "allowedValues": [
+        "L",
+        "D",
+        "T",
+        "P",
+        "X"
+      ]
+    },
+    "region_prefix": {
+      "type": "string",
+      "defaultValue": "EUS",
+      "allowedValues": [
+        "EUS",
+        "EUS2",
+        "GV",
+        "GT",
+        "DE",
+        "DC",
+        "SE",
+        "SC"
+      ],
+      "metadata": {
+        "description": "DEFINE THE REGION LOCATION"
+      }
+    },
+    "enabledForDeployment": {
+      "type": "bool",
+      "defaultValue": true
+    },
+    "enabledForDiskEncryption": {
+      "type": "bool",
+      "defaultValue": true
+    },
+    "enabledForTemplateDeployment": {
+      "type": "bool",
+      "defaultValue": true
+    },
+    "kvtSku": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "metadata": {
+        "description": "DEFINE THE KEY VAULT SKU FOR DEPLOYMENT"
+      }
+    },
+    "tenant": {
+      "type": "string",
+      "defaultValue": "[subscription().tenantId]",
+      "metadata": {
+        "description": "GET THE TENANT ID FROM THE ARM FABRIC SO THAT THIS REMAINS AS PORTABLE AS POSSIBLE"
+      }
+    },
+    "appSvcName": {
+      "type": "string",
+      "defaultValue": "[format('{0}APP-01', parameters('cmn_prefix'))]",
+      "metadata": {
+        "description": "DEFINE A NAME FOR THE AZURE OBJECT"
+      }
+    },
+    "planName": {
+      "type": "string",
+      "defaultValue": "[format('{0}HPN-01', parameters('cmn_prefix'))]",
+      "metadata": {
+        "description": "DEFINE A NAME FOR THE AZURE OBJECT"
+      }
+    },
+    "sql_user": {
+      "type": "string",
+      "defaultValue": "sql_db_admin",
+      "metadata": {
+        "description": "DEFINE THE NATIVE SQL USER NAME IF NOT USING AAD AUTHENTICATION"
+      }
+    },
+    "acr_tier": {
+      "type": "string",
+      "defaultValue": "Premium",
+      "allowedValues": [
+        "Basic",
+        "Standard",
+        "Premium"
+      ],
+      "metadata": {
+        "description": "DEFINE THE CONTAINER REGISTRY SKU, PREMIUM IF NEEDED, OTHERWISE STANDARD"
+      }
+    },
+    "acr_server_name": {
+      "type": "string",
+      "defaultValue": "[format('{0}{1}{2}{3}ACR', parameters('region_prefix'), parameters('appName'), parameters('env'), parameters('impact'))]",
+      "metadata": {
+        "description": "DEFINE A URL-FRIENDLY ACR NAME SO THAT THIS CAN BE DEPLOYED"
+      }
+    },
+    "sql_secret": {
+      "type": "secureString",
+      "defaultValue": "[newGuid()]",
+      "metadata": {
+        "description": "CREATE A UNIQUE GUID AND STORE IN KEYVAULT AND USE AS SQL SERVER ADMIN PASSWORD IF AAD AUTHENTICATION WILL NOT BE USED AS THE APPS MAIN FORM OF AUTHN"
+      }
+    },
+    "db_name": {
+      "type": "string",
+      "defaultValue": "db_1",
+      "metadata": {
+        "description": "CREATE A SQL DB WITH THE NAME BELOW"
+      }
+    },
+    "second_db_name": {
+      "type": "string",
+      "defaultValue": "db_2"
+    },
+    "tags": {
+      "type": "object",
+      "defaultValue": {
+        "Cloud Service Provider": "",
+        "Account": "",
+        "Department": "",
+        "Program": "",
+        "Functional": "",
+        "Applicatoin": ""
+      },
+      "metadata": {
+        "description": "ASSIGN THE FOLLOWING TAGS TO EVERY AZURE RESOURCE SO A COMMON BASELINE IS MET"
+      }
+    },
+    "subnetName": {
+      "type": "string",
+      "defaultValue": "PLINK-01",
+      "metadata": {
+        "description": "PRIVATE LINK SUBNET REFERENCE ID"
+      }
+    },
+    "delegatedSubnet": {
+      "type": "string",
+      "defaultValue": "vnetRegionalPeering",
+      "metadata": {
+        "description": "REGION VNET PEERING SUBNET REFERENCE ID"
+      }
+    },
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "AZ-EUS-VNET-01",
+      "metadata": {
+        "description": "NAME OF VNET THAT HOSTS THE SUBNET"
+      }
+    },
+    "vnetRgp": {
+      "type": "string",
+      "defaultValue": "AZ-GV-DOD-AF-CCE-CMNSVC-L-IL2-APP-RGP-01",
+      "metadata": {
+        "description": "NAME OF RESOURCE GROUP HOSTING THE VNET"
+      }
+    }
+  },
+  "functions": [],
+  "variables": {
+    "plinkSqlDnsZone": "[environment().suffixes.sqlServerHostname]",
+    "plinkRdisDnsZone": "privatelink.redis.cache.windows.net",
+    "plinkStgDnsZone": "[environment().suffixes.storage]",
+    "privateLinkSubnetRef": "[format('{0}/subnets/{1}', extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('vnetRgp')), 'Microsoft.Network/virtualNetworks', parameters('vnetName')), parameters('subnetName'))]",
+    "vnetRegionalPeering": "[format('{0}/subnets/{1}', extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('vnetRgp')), 'Microsoft.Network/virtualNetworks', parameters('vnetName')), parameters('delegatedSubnet'))]",
+    "minTlsVersion": "1.2"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Sql/servers/databases",
+      "apiVersion": "2021-02-01-preview",
+      "name": "[format('{0}/{1}', format('{0}SQL-01', parameters('cmn_prefix')), parameters('db_name'))]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', format('{0}SQL-01', parameters('cmn_prefix')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Sql/servers/databases",
+      "apiVersion": "2021-02-01-preview",
+      "name": "[format('{0}/{1}', format('{0}SQL-01', parameters('cmn_prefix')), parameters('second_db_name'))]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', format('{0}SQL-01', parameters('cmn_prefix')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites/networkConfig",
+      "apiVersion": "2020-12-01",
+      "name": "[format('{0}/{1}', parameters('appSvcName'), 'virtualNetwork')]",
+      "properties": {
+        "subnetResourceId": "[variables('vnetRegionalPeering')]",
+        "swiftSupported": true
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('appSvcName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+      "apiVersion": "2020-06-01",
+      "name": "[format('{0}/{1}', format('privatelink{0}', variables('plinkSqlDnsZone')), 'linkDnsZone2Vnet')]",
+      "location": "global",
+      "properties": {
+        "registrationEnabled": false,
+        "virtualNetwork": {
+          "id": "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('vnetRgp')), 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/privateDnsZones', format('privatelink{0}', variables('plinkSqlDnsZone')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+      "apiVersion": "2020-06-01",
+      "name": "[format('{0}/{1}', variables('plinkRdisDnsZone'), 'linkDnsZone2Vnet')]",
+      "location": "global",
+      "properties": {
+        "registrationEnabled": false,
+        "virtualNetwork": {
+          "id": "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('vnetRgp')), 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/privateDnsZones', variables('plinkRdisDnsZone'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+      "apiVersion": "2020-06-01",
+      "name": "[format('{0}/{1}', format('privatelink.{0}', variables('plinkStgDnsZone')), 'linkDnsZone2Vnet')]",
+      "location": "global",
+      "properties": {
+        "registrationEnabled": false,
+        "virtualNetwork": {
+          "id": "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('vnetRgp')), 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/privateDnsZones', format('privatelink.{0}', variables('plinkStgDnsZone')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Cache/redis",
+      "apiVersion": "2020-12-01",
+      "name": "[format('{0}RDIS-01', parameters('cmn_prefix'))]",
+      "tags": "[parameters('tags')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "minimumTlsVersion": "[variables('minTlsVersion')]",
+        "sku": {
+          "capacity": 1,
+          "family": "C",
+          "name": "Basic"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Sql/servers",
+      "apiVersion": "2021-02-01-preview",
+      "name": "[format('{0}SQL-01', parameters('cmn_prefix'))]",
+      "tags": "[parameters('tags')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "administratorLogin": "[parameters('sql_user')]",
+        "administratorLoginPassword": "[parameters('sql_secret')]",
+        "version": "12.0",
+        "minimalTlsVersion": "[variables('minTlsVersion')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults",
+      "apiVersion": "2021-04-01-preview",
+      "name": "[parameters('kvt_name')]",
+      "location": "[resourceGroup().location]",
+      "tags": "[parameters('tags')]",
+      "properties": {
+        "tenantId": "[parameters('tenant')]",
+        "sku": {
+          "family": "A",
+          "name": "[parameters('kvtSku')]"
+        },
+        "accessPolicies": "[parameters('accessPolicies')]",
+        "enabledForDeployment": "[parameters('enabledForDeployment')]",
+        "enabledForDiskEncryption": "[parameters('enabledForDiskEncryption')]",
+        "enabledForTemplateDeployment": "[parameters('enabledForTemplateDeployment')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[format('{0}/{1}SQL-ADMIN-PWD', parameters('kvt_name'), parameters('cmn_prefix'))]",
+      "properties": {
+        "value": "[parameters('sql_secret')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('kvt_name'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[format('{0}/{1}SQL-ADMIN-USR', parameters('kvt_name'), parameters('cmn_prefix'))]",
+      "properties": {
+        "value": "[parameters('sql_user')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('kvt_name'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[format('{0}/{1}SQL-URL', parameters('kvt_name'), parameters('cmn_prefix'))]",
+      "tags": "[parameters('tags')]",
+      "properties": {
+        "value": "[toLower(reference(resourceId('Microsoft.Sql/servers', format('{0}SQL-01', parameters('cmn_prefix')))).fullyQualifiedDomainName)]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('kvt_name'))]",
+        "[resourceId('Microsoft.Sql/servers', format('{0}SQL-01', parameters('cmn_prefix')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[format('{0}/{1}SQL-CONN-URL', parameters('kvt_name'), parameters('cmn_prefix'))]",
+      "tags": "[parameters('tags')]",
+      "properties": {
+        "value": "[format('Server=tcp:{0},1433:Initial Catalog={1};Persist Security Info=False;User ID={2};Password={3};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;', reference(resourceId('Microsoft.Sql/servers', format('{0}SQL-01', parameters('cmn_prefix')))).fullyQualifiedDomainName, parameters('db_name'), parameters('sql_user'), parameters('sql_secret'))]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('kvt_name'))]",
+        "[resourceId('Microsoft.Sql/servers', format('{0}SQL-01', parameters('cmn_prefix')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[format('{0}/{1}RDIS-URL', parameters('kvt_name'), parameters('cmn_prefix'))]",
+      "tags": "[parameters('tags')]",
+      "properties": {
+        "value": "[toLower(reference(resourceId('Microsoft.Cache/redis', format('{0}RDIS-01', parameters('cmn_prefix')))).hostName)]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('kvt_name'))]",
+        "[resourceId('Microsoft.Cache/redis', format('{0}RDIS-01', parameters('cmn_prefix')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[format('{0}/{1}RDIS-CONN-URL', parameters('kvt_name'), parameters('cmn_prefix'))]",
+      "tags": "[parameters('tags')]",
+      "properties": {
+        "value": "[toLower(format('{0}:{1},password={2},ssl=True,aboutConnection=False,,sslprotocols=tls12', reference(resourceId('Microsoft.Cache/redis', format('{0}RDIS-01', parameters('cmn_prefix')))).hostName, reference(resourceId('Microsoft.Cache/redis', format('{0}RDIS-01', parameters('cmn_prefix')))).sslPort, listKeys(resourceId('Microsoft.Cache/redis', format('{0}RDIS-01', parameters('cmn_prefix'))), '2020-12-01').primaryKey))]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('kvt_name'))]",
+        "[resourceId('Microsoft.Cache/redis', format('{0}RDIS-01', parameters('cmn_prefix')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-12-01",
+      "name": "[parameters('planName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "reserved": true,
+        "targetWorkerCount": 3,
+        "targetWorkerSizeId": 3
+      },
+      "sku": {
+        "name": "P1v2",
+        "tier": "Standard"
+      },
+      "kind": "linux",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}RDIS-CONN-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}RDIS-CONN-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])]",
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}RDIS-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}RDIS-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])]",
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}SQL-CONN-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}SQL-CONN-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])]",
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}SQL-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}SQL-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])]",
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}SQL-ADMIN-PWD', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}SQL-ADMIN-PWD', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])]",
+        "[resourceId('Microsoft.Sql/servers', format('{0}SQL-01', parameters('cmn_prefix')))]",
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}SQL-ADMIN-USR', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}SQL-ADMIN-USR', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2020-06-01",
+      "name": "[parameters('appSvcName')]",
+      "location": "[resourceGroup().location]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "httpsOnly": true,
+        "siteConfig": {
+          "linuxFxVersion": "[format('DOCKER|{0}/{1}', reference(resourceId('Microsoft.ContainerRegistry/registries', parameters('acr_server_name'))).loginServer, parameters('dockerImageAndTag'))]"
+        },
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('planName'))]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}ACR-PWD', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}ACR-PWD', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])]",
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}ACR-USR', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}ACR-USR', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])]",
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}ACR-LOGIN-SRV', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}ACR-LOGIN-SRV', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])]",
+        "[resourceId('Microsoft.ContainerRegistry/registries', parameters('acr_server_name'))]",
+        "[resourceId('Microsoft.Web/serverfarms', parameters('planName'))]",
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}RDIS-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}RDIS-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])]",
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}SQL-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}SQL-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites/config",
+      "apiVersion": "2020-06-01",
+      "name": "[format('{0}/{1}', parameters('appSvcName'), 'appsettings')]",
+      "properties": {
+        "WEBSITE_DNS_SERVER": "168.63.129.16",
+        "WEBSITE_VNET_ROUTE_ALL": "1",
+        "DOCKER_REGISTRY_SERVER_URL": "[format('https://{0}', reference(resourceId('Microsoft.ContainerRegistry/registries', parameters('acr_server_name'))).loginServer)]",
+        "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('acr_server_name')]",
+        "DOCKER_REGISTRY_SERVER_PASSWORD": "[listCredentials(resourceId('Microsoft.ContainerRegistry/registries', parameters('acr_server_name')), '2019-12-01-preview').passwords[0].value]",
+        "WEBSITES_ENABLE_APP_SERVICE_STORAGE": "false",
+        "REDIS_CACHE_CONN_STRING": "[format('@Microsoft.KeyVault(SecretUri={0}/)', reference(resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}RDIS-CONN-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}RDIS-CONN-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])).secretUri)]",
+        "SQL_CONN_STRING": "[format('@Microsoft.KeyVault(SecretUri={0}/)', reference(resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}SQL-CONN-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}SQL-CONN-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])).secretUri)]",
+        "CONTAINER_REGISTRY_URL": "[format('@Microsoft.KeyVault(SecretUri={0}/)', reference(resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}ACR-USR', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}ACR-USR', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])).secretUri)]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}ACR-USR', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}ACR-USR', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])]",
+        "[resourceId('Microsoft.ContainerRegistry/registries', parameters('acr_server_name'))]",
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}RDIS-CONN-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}RDIS-CONN-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])]",
+        "[resourceId('Microsoft.Web/sites', parameters('appSvcName'))]",
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}SQL-CONN-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[0], split(format('{0}/{1}SQL-CONN-URL', parameters('kvt_name'), parameters('cmn_prefix')), '/')[1])]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/accessPolicies",
+      "apiVersion": "2021-04-01-preview",
+      "name": "[format('{0}/add', parameters('kvt_name'))]",
+      "properties": {
+        "accessPolicies": [
+          {
+            "tenantId": "[subscription().tenantId]",
+            "objectId": "[reference(resourceId('Microsoft.Web/sites', parameters('appSvcName')), '2020-06-01', 'full').identity.principalId]",
+            "permissions": {
+              "secrets": [
+                "get"
+              ]
+            }
+          }
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('kvt_name'))]",
+        "[resourceId('Microsoft.Web/sites', parameters('appSvcName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.ContainerRegistry/registries",
+      "apiVersion": "2019-12-01-preview",
+      "name": "[parameters('acr_server_name')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "[parameters('acr_tier')]"
+      },
+      "properties": {
+        "adminUserEnabled": true,
+        "networkRuleBypassOptions": "AzureServices",
+        "publicNetworkAccess": "Enabled"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('kvt_name'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[format('{0}/{1}ACR-PWD', parameters('kvt_name'), parameters('cmn_prefix'))]",
+      "properties": {
+        "value": "[listCredentials(resourceId('Microsoft.ContainerRegistry/registries', parameters('acr_server_name')), '2019-12-01-preview').passwords[0].value]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.ContainerRegistry/registries', parameters('acr_server_name'))]",
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('kvt_name'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[format('{0}/{1}ACR-LOGIN-SRV', parameters('kvt_name'), parameters('cmn_prefix'))]",
+      "properties": {
+        "value": "[reference(resourceId('Microsoft.ContainerRegistry/registries', parameters('acr_server_name'))).loginServer]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.ContainerRegistry/registries', parameters('acr_server_name'))]",
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('kvt_name'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[format('{0}/{1}ACR-USR', parameters('kvt_name'), parameters('cmn_prefix'))]",
+      "properties": {
+        "value": "[parameters('acr_server_name')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.ContainerRegistry/registries', parameters('acr_server_name'))]",
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('kvt_name'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/privateEndpoints",
+      "apiVersion": "2021-02-01",
+      "name": "[format('{0}SQL-PLINK-01', parameters('cmn_prefix'))]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "subnet": {
+          "id": "[variables('privateLinkSubnetRef')]"
+        },
+        "privateLinkServiceConnections": [
+          {
+            "properties": {
+              "privateLinkServiceId": "[resourceId('Microsoft.Sql/servers', format('{0}SQL-01', parameters('cmn_prefix')))]",
+              "groupIds": [
+                "sqlServer"
+              ]
+            },
+            "name": "[format('{0}SQL-PLINK-01', parameters('cmn_prefix'))]"
+          }
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', format('{0}SQL-01', parameters('cmn_prefix')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/privateEndpoints",
+      "apiVersion": "2021-02-01",
+      "name": "[format('{0}RDIS-PLINK-01', parameters('cmn_prefix'))]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "subnet": {
+          "id": "[variables('privateLinkSubnetRef')]"
+        },
+        "privateLinkServiceConnections": [
+          {
+            "properties": {
+              "privateLinkServiceId": "[resourceId('Microsoft.Cache/redis', format('{0}RDIS-01', parameters('cmn_prefix')))]",
+              "groupIds": [
+                "redisCache"
+              ]
+            },
+            "name": "[format('{0}RDIS-PLINK-01', parameters('cmn_prefix'))]"
+          }
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Cache/redis', format('{0}RDIS-01', parameters('cmn_prefix')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/privateDnsZones",
+      "apiVersion": "2020-06-01",
+      "name": "[format('privatelink{0}', variables('plinkSqlDnsZone'))]",
+      "location": "global"
+    },
+    {
+      "type": "Microsoft.Network/privateDnsZones",
+      "apiVersion": "2020-06-01",
+      "name": "[variables('plinkRdisDnsZone')]",
+      "location": "global"
+    },
+    {
+      "type": "Microsoft.Network/privateDnsZones",
+      "apiVersion": "2020-06-01",
+      "name": "[format('privatelink.{0}', variables('plinkStgDnsZone'))]",
+      "location": "global"
+    },
+    {
+      "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+      "apiVersion": "2020-07-01",
+      "name": "[format('{0}/mydnsgroupname', format('{0}SQL-PLINK-01', parameters('cmn_prefix')))]",
+      "properties": {
+        "privateDnsZoneConfigs": [
+          {
+            "name": "config1",
+            "properties": {
+              "privateDnsZoneId": "[resourceId('Microsoft.Network/privateDnsZones', format('privatelink{0}', variables('plinkSqlDnsZone')))]"
+            }
+          }
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/privateEndpoints', format('{0}SQL-PLINK-01', parameters('cmn_prefix')))]",
+        "[resourceId('Microsoft.Network/privateDnsZones', format('privatelink{0}', variables('plinkSqlDnsZone')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+      "apiVersion": "2020-07-01",
+      "name": "[format('{0}/mydnsgroupname', format('{0}RDIS-PLINK-01', parameters('cmn_prefix')))]",
+      "properties": {
+        "privateDnsZoneConfigs": [
+          {
+            "name": "config1",
+            "properties": {
+              "privateDnsZoneId": "[resourceId('Microsoft.Network/privateDnsZones', variables('plinkRdisDnsZone'))]"
+            }
+          }
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/privateDnsZones', variables('plinkRdisDnsZone'))]",
+        "[resourceId('Microsoft.Network/privateEndpoints', format('{0}RDIS-PLINK-01', parameters('cmn_prefix')))]"
+      ]
+    }
+  ]
+}
