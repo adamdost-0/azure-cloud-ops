@@ -61,7 +61,7 @@ From here you will see two resources created in your subscription. Take a look a
 
 ### Disk Encryption
 
-Next we move onto the OS Disks. We need to ensure that the storage that we leverage for these compute resources meets the same level of encryption. This can be done via BitLocker or dm-crypt. Before proceeding further you need to seriously read up on [Disk Encryption](https://docs.microsoft.com/en-us/azure/virtual-machines/disk-encryption-overview) on Azure and ensure you understand what is/isn't supported as encryption of VM's can get tricky depending on what you encrypt if you go down the OS level encryption and not the server side encryptio. In this blog we will be doing the Server Side encryption. Let's do an exercise to deploy a Windows Server 2019 VM and Encrypt the Disk with an Azure Key Vault hosted encryption key.
+Next we move onto the OS Disks. We need to ensure that the storage that we leverage for these compute resources meets the same level of encryption. This can be done via BitLocker or dm-crypt. Before proceeding further you need to seriously read up on [Disk Encryption](https://docs.microsoft.com/en-us/azure/virtual-machines/disk-encryption-overview) on Azure and ensure you understand what is/isn't supported as encryption of VM's can get tricky depending on what you encrypt if you go down the OS level encryption and not the server side encryption. In this blog we will be doing the Server Side encryption. Let's do an exercise to deploy a Windows Server 2019 VM and Encrypt the Disk with an Azure Key Vault hosted encryption key.
 
 Here is a code snippet for creating an Azure Key Vault, Key and Disk encryption set that will use said key to encrpyt the disk.
 
