@@ -147,7 +147,7 @@ param delegatedSubnet string = 'vnetRegionalPeering'
 param vnetName string = 'AZ-EUS-VNET-01'
 
 @description('NAME OF RESOURCE GROUP HOSTING THE VNET')
-param vnetRgp string = 'AZ-GV-DOD-AF-CCE-CMNSVC-L-IL2-APP-RGP-01'
+param vnetRgp string = 'AZ-EUS-APP-RGP-01'
 
 
 
