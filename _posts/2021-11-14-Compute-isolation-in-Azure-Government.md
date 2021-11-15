@@ -383,4 +383,4 @@ resource win19VM 'Microsoft.Compute/virtualMachines@2021-04-01' = {
 
 That's all for now! Thank you for reading and good luck to those deploying isolated workloads in Azure! 
 
-![Overview](assets/images/image.png)
+![Overview](/azure-cloud-ops/assets/images/image.png)
