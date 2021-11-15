@@ -172,7 +172,7 @@ resource win19VM 'Microsoft.Compute/virtualMachines@2021-04-01' = {
     osProfile: {
       computerName: '${resourcePrefix}VM-01'
       adminUsername: vmUserName
-      adminPassword: '1qaz!QAZ1qaz!QAZ'
+      adminPassword: 'pleaseChangeThisIwillCryIfyoudoNotokthankyouBye'
       windowsConfiguration: {
         provisionVMAgent: true
         enableAutomaticUpdates: true
