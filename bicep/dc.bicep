@@ -268,7 +268,7 @@ resource adfsDomainJoin 'Microsoft.Compute/virtualMachines/extensions@2021-03-01
       restart: true
     }
     protectedSettings: {
-      Password: '1qaz!QAZ1qaz!QAZ'
+      Password: 'InsertPasswordHere'
     }
   }
 }
