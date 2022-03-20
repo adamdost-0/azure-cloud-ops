@@ -47,6 +47,7 @@ graph LR
     12 --> 12b[Code-Scan]  --> 12c[results.json]
     end
     
+
 ````
 
 A sample script to execute the scan is the following 
