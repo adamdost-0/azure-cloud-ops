@@ -1,0 +1,20 @@
+{
+	"schema": "https://gitlab.com/gitlab-org/security-products/security-report-schemas/-/raw/v14.1.0/dist/sast-report-format.json",
+	"version": "14.0.1",
+	"scan": {
+		"start_time": "2022-03-20T16:31:47",
+		"end_time": "2022-03-20T16:31:48",
+		"status": "success",
+		"type": "sast",
+		"scanner": {
+			"id": "keeping-infrastructure-as-code-secure",
+			"name": "Keeping Infrastructure as Code Secure",
+			"url": "https://www.kics.io/",
+			"version": "v1.5.4",
+			"vendor": {
+				"name": "Checkmarx"
+			}
+		}
+	},
+	"vulnerabilities": []
+}
