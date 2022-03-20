@@ -28,7 +28,7 @@ The tool itself is executed at runtime only and runs inside of WSL2 so running i
 
 One Limitation is that at the time of this blog post KICS can only scan ARM Template's and not Bicep Files so you will need to build your Bicep Files into ARM Templates for the scan to work. Your requirements will define this however if you're building out Bicep Modules and referencing them in your main.bicep file it's best to run KICS on the Module's itself to generate a report for then one on the solution you're building based off of the module. The following mermaid-js outline shows one implementation method
 
-![Rendered File Structure](https://github.com/adamdost-msft/azure-cloud-ops/blob/main/assets/images/bicep-mermaid-output.svg)
+[Click here to see the below code rendered if your browser won't show it](https://github.com/adamdost-msft/azure-cloud-ops/blob/main/assets/images/bicep-mermaid-output.svg)
 
 
 ````mermaid-js
