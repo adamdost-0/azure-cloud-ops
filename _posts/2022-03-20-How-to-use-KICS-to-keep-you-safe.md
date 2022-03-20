@@ -101,4 +101,4 @@ docker run -v ${FilePath}:/path checkmarx/kics:debian kics scan `
 
 Your customer is the one that will net the best results from this because it provides them an artifact to evaluate the current state of your IaC and it's reusable across cloud providers giving them the assurance that they do not need to create unicorn processes for just a single cloud provider. KICS can output several different file formats (SARIF/html/junit/pdf/json/sonarqube) and with something like Azure DevOps Pipelines you can have that publish as an artifact for review and fail the pipeline if HIGH's show up. 
 
-Go forth and **K**eep your **I**aC **S**ecure before someone finds a way to exploit it! You can find a sample result scan from my dc.bicep scan [here!](bicep\domainController\results)
+Go forth and **K**eep your **I**aC **S**ecure before someone finds a way to exploit it! You can find a sample result scan from my dc.bicep scan [here!](https://github.com/adamdost-msft/azure-cloud-ops/tree/main/bicep/domainController/results)
