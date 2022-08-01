@@ -21,6 +21,7 @@ Repo URL: https://github.com/adamdost-msft/azure-policy-il5
 
 ````bash
 git clone https://github.com/adamdost-msft/azure-policy-il5
+cd azure-policy-il5
 make
 ````
 
