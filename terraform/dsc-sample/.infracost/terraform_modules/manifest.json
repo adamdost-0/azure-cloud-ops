@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"gov-azure-rgp","Source":"./resource-group","Dir":"resource-group"},{"Key":"automation_module_import","Source":"./automation","Dir":"automation"}]}
