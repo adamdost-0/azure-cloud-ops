@@ -6,7 +6,7 @@ tags:
   - security
 ---
 
-As you begin enabling teams to roll out custom Host Pools to publish for consumption, the discussion of the "Clipboard" becomes a key topic to ensure data does not leave the enterprise environment. To enable the development of customized host pools at scale, use the following Azure Policy to help audit and enforce different AVD configurations so that everyone follows an enterprise baselin
+As you begin enabling teams to roll out custom host pools for consumption, the discussion of "Clipboard" access becomes a key topic to ensure data does not leave the enterprise environment. To enable the development of customized host pools at scale, use the following Azure Policy to help audit and enforce different AVD configurations so that everyone follows an enterprise baselin
 
 
 ````json
