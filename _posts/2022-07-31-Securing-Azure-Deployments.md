@@ -11,7 +11,7 @@ When working in collaboration environments baseline guard rails ensure that if d
 
 ## URL 
 
-Repo URL: https://github.com/adamdost-msft/azure-policy-il5
+Repo URL: https://github.com/adamdost-0/azure-policy-il5
 
 ## Required Pre-Installed Binaries
 1. Terraform-Docs
@@ -19,7 +19,7 @@ Repo URL: https://github.com/adamdost-msft/azure-policy-il5
 3. InfraCost (Can be disabled/removed)
 
 ````bash
-git clone https://github.com/adamdost-msft/azure-policy-il5
+git clone https://github.com/adamdost-0/azure-policy-il5
 cd azure-policy-il5
 make
 ````

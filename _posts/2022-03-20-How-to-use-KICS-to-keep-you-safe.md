@@ -28,7 +28,7 @@ The tool itself is executed at runtime only and runs inside of WSL2 so running i
 
 One Limitation is that at the time of this blog post KICS can only scan ARM Template's and not Bicep Files so you will need to build your Bicep Files into ARM Templates for the scan to work. Your requirements will define this however if you're building out Bicep Modules and referencing them in your main.bicep file it's best to run KICS on the Module's itself to generate a report for then one on the solution you're building based off of the module. The following mermaid-js outline shows one implementation method
 
-[Click here to see the below code rendered if your browser won't show it](https://raw.githubusercontent.com/adamdost-msft/azure-cloud-ops/main/assets/images/bicep-mermaid-output.svg)
+[Click here to see the below code rendered if your browser won't show it](https://raw.githubusercontent.com/adamdost-0/azure-cloud-ops/main/assets/images/bicep-mermaid-output.svg)
 
 
 ````mermaid-js
@@ -100,6 +100,6 @@ docker run -v ${FilePath}:/path checkmarx/kics:debian kics scan `
 
 Your customer is the one that will net the best results from this because it provides them an artifact to evaluate the current state of your IaC and it's reusable across cloud providers giving them the assurance that they do not need to create unicorn processes for just a single cloud provider. KICS can output several different file formats (SARIF/html/junit/pdf/json/sonarqube) and with something like Azure DevOps Pipelines you can have that publish as an artifact for review and fail the pipeline if HIGH's show up. 
 
-Go forth and **K**eep your **I**aC **S**ecure before someone finds a way to exploit it! You can find a sample result scan from my dc.bicep scan [here!](https://github.com/adamdost-msft/azure-cloud-ops/tree/main/bicep/domainController/results)
+Go forth and **K**eep your **I**aC **S**ecure before someone finds a way to exploit it! You can find a sample result scan from my dc.bicep scan [here!](https://github.com/adamdost-0/azure-cloud-ops/tree/main/bicep/domainController/results)
 
 *Disclaimer: I do not work for Checkmarx however I do work at Microsoft!*

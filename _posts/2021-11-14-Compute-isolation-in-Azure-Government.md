@@ -380,7 +380,7 @@ resource win19VM 'Microsoft.Compute/virtualMachines@2021-04-01' = {
 
 ````
 
-[Here's the entire stack!](https://github.com/adamdost-msft/azure-cloud-ops/blob/b2fbb8e9d3b0a65fdfd43d1aa5a0865ddea5b754/assets/images/image.png)
+[Here's the entire stack!](https://github.com/adamdost-0/azure-cloud-ops/blob/b2fbb8e9d3b0a65fdfd43d1aa5a0865ddea5b754/assets/images/image.png)
 
 That's all for now! Thank you for reading and good luck to those deploying isolated workloads in Azure! 
 
