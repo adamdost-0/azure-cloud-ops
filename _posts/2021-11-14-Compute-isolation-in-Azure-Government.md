@@ -164,7 +164,7 @@ Now that you've created the resources you need to deploy your isolated workload 
 2. Azure Premium Key Vault (Hardware Security Modules backed)
 3. Disk Encryption Set which uses an Azure Key Vault Key to encrypt disks with a Customer-Managed Key.
 
-Let's deploy the entire stack in a single deployment. Once the deployment is complete head on over to the resource visualizer and you'll see how each piece of the deployment builds on each other from the virtual network to the key vault. You can find the full template [here](bicep/domainController/dedicatedhost.bicep)
+Let's deploy the entire stack in a single deployment. Once the deployment is complete head on over to the resource visualizer and you'll see how each piece of the deployment builds on each other from the virtual network to the key vault. You can find the full template [here](https://github.com/adamdost-0/azure-cloud-ops/blob/main/bicep/domainController/dedicatedhost.bicep)
 
 ````bicep
 param regionPrefix string = 'GV'
