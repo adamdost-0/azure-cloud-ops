@@ -4,3 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+
+  # Keep the Python sample dependencies in a secure, modern range.
+  - package-ecosystem: "pip"
+    directory: "/python-container-dev"
+    schedule:
+      interval: "weekly"
