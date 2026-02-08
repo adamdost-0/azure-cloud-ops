@@ -8,7 +8,12 @@ layout: single
 
 These are concise case studies designed for recruiters and hiring managers.
 
-### 1) Azure landing zone + guardrails-first governance
+### 1) AI + automation for platform operations
+- What: automation patterns and AI-enabled workflows for ops/dev productivity
+- Why it matters: faster delivery, fewer manual steps, safer changes
+- Proof: (add links to posts / diagrams / code here)
+
+### 2) Hub-spoke networking for private PaaS access
 - What: landing zone patterns, subscription organization, and policy guardrails
 - Why it matters: prevents insecure defaults and reduces configuration drift
 - Proof: (add links to posts / diagrams / code here)
@@ -18,7 +23,7 @@ These are concise case studies designed for recruiters and hiring managers.
 - Why it matters: reliable connectivity and secure data paths in production
 - Proof: (add links to posts / diagrams / code here)
 
-### 3) AI + automation for platform operations
-- What: automation patterns and AI-enabled workflows for ops/dev productivity
-- Why it matters: faster delivery, fewer manual steps, safer changes
+### 3) Azure landing zone + guardrails-first governance
+- What: landing zone patterns, subscription organization, and policy guardrails
+- Why it matters: prevents insecure defaults and reduces configuration drift
 - Proof: (add links to posts / diagrams / code here)

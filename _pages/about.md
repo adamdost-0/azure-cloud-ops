@@ -12,6 +12,7 @@ My specialty is building **production-ready Azure platforms** with **guardrails-
 
 ## What I’m good at
 
+- **AI & automation:** AI-enabled solutions, workflow automation, productivity tooling
 - **Networking & platform architecture:** hub-spoke, private endpoints, DNS, firewall patterns, secure connectivity
 - **Automation / IaC:** repeatable deployments, environment standardization, CI/CD guardrails
 - **Governance & security-by-default:** policy-as-code, compliance-aligned design, reducing drift and insecure defaults
