@@ -13,11 +13,9 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: CloudOps
+title: Principal Azure Cloud Architect
 email: adamd125@gmail.com
-description: >- # this means to ignore newlines until "baseurl:"
-  One stop shop to talk about Azure and architecture!
-twitter_username: aadost1
+twitter_username:twitter_username: aadost1
 github_username: adamdost-microsoft
 minimal_mistakes_skin: default
 search: true
@@ -29,7 +27,7 @@ remote_theme: mmistakes/minimal-mistakes
 permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
-timezone: US
+timezone: America/New_York
 
 include:
   - _pages
@@ -59,7 +57,7 @@ plugins:
 author:
   name   : "Adam Dost"
   avatar : "/assets/images/background.jpeg"
-  bio    : "Just trying to resolve blockers for those who are trying to strive for success. That and convince others to learn Linux."
+  bio    : "Principal Azure Cloud Architect focused on AI, automation, and networking. I design and ship secure-by-default solutions with guardrails so production doesn't start with compromises."
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"
