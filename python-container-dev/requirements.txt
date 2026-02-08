@@ -2,7 +2,7 @@
 # The Flask/Werkzeug <2 pins caused Dependabot security updates to fail.
 # If you need legacy Python 2.x compatibility, use the upstream historical version.
 
-Flask>=2.2,<3
+Flask>=2.2,<4
 Werkzeug>=2.2,<3
 flask-session>=0.5,<1
 requests>=2,<3
