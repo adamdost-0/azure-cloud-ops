@@ -9,7 +9,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]  
+    branches: [ main ]
   schedule:
     - cron: '32 7 * * 0'
 
@@ -26,13 +26,23 @@ jobs:
       - name: Clone repo
         uses: actions/checkout@v4
 
-      - name: Run tfsec
-        uses: tfsec/tfsec-sarif-action@9a83b5c3524f825c020e356335855741fd02745f
-        with:
-          sarif_file: tfsec.sarif         
+      - name: Install tfsec
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Download a pinned tfsec release to avoid GitHub API rate limits.
+          TFSEC_VERSION="v1.28.13"
+          curl -sSL -o tfsec "https://github.com/aquasecurity/tfsec/releases/download/${TFSEC_VERSION}/tfsec-linux-amd64"
+          chmod +x tfsec
+          ./tfsec --version
+
+      - name: Run tfsec (SARIF)
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./tfsec --format sarif --out tfsec.sarif .
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
         with:
-          # Path to SARIF file relative to the root of the repository
-          sarif_file: tfsec.sarif  
+          sarif_file: tfsec.sarif

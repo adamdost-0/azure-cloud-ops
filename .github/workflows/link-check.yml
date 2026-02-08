@@ -25,5 +25,5 @@ jobs:
             --max-retries 2
             --timeout 20
             --insecure
-            --exclude '^(https?://(portal\\.azure\\.com|go\\.microsoft\\.com/fwlink|reddit\\.com)(/|$))'
+            --exclude ^https?://(portal\\.azure\\.com|go\\.microsoft\\.com/fwlink|reddit\\.com)(/|$)
             './**/*.md'
