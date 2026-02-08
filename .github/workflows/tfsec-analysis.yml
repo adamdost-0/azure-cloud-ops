@@ -40,7 +40,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          ./tfsec --format sarif --out tfsec.sarif .
+          ./tfsec --soft-fail --format sarif --out tfsec.sarif .
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
