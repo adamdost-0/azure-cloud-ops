@@ -1,15 +1,29 @@
 ---
-permalink: /about/
 title: "About"
+permalink: /about/
+layout: single
 ---
 
-````
-$ whoami
-````
-I'm a Sr. Cloud Solution's Architect at @microsoft.
+## Who I am
 
-I have worked in various Azure Enterprise Environment's in commercial and government and architected solutions inside of them. The two areas of Cloud I will always recommend individuals focus on first is **Networking** and **Identity**. These two core areas are the driving factor for a secure longterm cloud adoption.
+I’m a **Principal Azure Cloud Architect** focused on **AI, automation, and networking**.
 
-When I'm not at my machine I spend my free time playing the fun uncle and entertaining my two amazing nephews. I enjoy browsing reddit and engaging with other professionals over at [r/Azure](https://reddit.com/r/Azure) and [r/SysAdmin](https://reddit.com/r/SysAdmin) to help understand what others in the field are working through and learn vicariously from others mistakes.
+My specialty is building **production-ready Azure platforms** with **guardrails-first governance** (policy, security, and reliability controls) so teams can move fast without creating risk.
 
-My opinions are of my own and do not represent my employer. If you'd like to speak with me then send me a GitHub Message!
+## What I’m good at
+
+- **AI & automation:** AI-enabled solutions, workflow automation, productivity tooling
+- **Networking & platform architecture:** hub-spoke, private endpoints, DNS, firewall patterns, secure connectivity
+- **Automation / IaC:** repeatable deployments, environment standardization, CI/CD guardrails
+- **Governance & security-by-default:** policy-as-code, compliance-aligned design, reducing drift and insecure defaults
+- **AI-enabled solutions:** pragmatic use of Azure AI services to improve delivery and operations
+
+## What this site is
+
+This repo backs my blog and portfolio. You’ll find:
+
+- posts explaining architecture decisions and tradeoffs
+- runnable examples (when practical)
+- diagrams and reference implementations
+
+If you’re a recruiter or hiring manager, start with **Projects** and **Contact**.

@@ -28,4 +28,6 @@ jobs:
             --exclude ^https?://portal\\.azure\\.com
             --exclude ^https?://go\\.microsoft\\.com/fwlink
             --exclude ^https?://reddit\\.com
+            --exclude ^https?://linkedin\\.com
+            --exclude ^https?://www\\.linkedin\\.com
             './**/*.md'
