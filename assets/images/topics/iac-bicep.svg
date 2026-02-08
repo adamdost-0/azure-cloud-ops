@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#4c1d95"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" rx="48" fill="url(#g)"/>
+  <g fill="#ffffff" opacity="0.95" font-family="Segoe UI, Roboto, Arial" >
+    <text x="80" y="210" font-size="64" font-weight="700">IaC (Bicep)</text>
+    <text x="80" y="290" font-size="32" opacity="0.9">Bicep-first examples with validation steps</text>
+  </g>
+  <g fill="none" stroke="#ffffff" stroke-width="10" opacity="0.9">
+    <path d="M900 160h220v60H900z"/>
+    <path d="M900 260h220v60H900z"/>
+    <path d="M900 360h220v60H900z"/>
+  </g>
+</svg>
