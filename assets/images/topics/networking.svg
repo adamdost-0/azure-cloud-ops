@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22c55e"/>
+      <stop offset="1" stop-color="#14532d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" rx="48" fill="url(#g)"/>
+  <g fill="#ffffff" opacity="0.95" font-family="Segoe UI, Roboto, Arial" >
+    <text x="80" y="210" font-size="64" font-weight="700">Networking</text>
+    <text x="80" y="290" font-size="32" opacity="0.9">Hub-spoke • Private Endpoints • DNS • Firewall</text>
+  </g>
+  <g stroke="#ffffff" stroke-width="10" opacity="0.9" fill="none">
+    <circle cx="920" cy="220" r="36"/>
+    <circle cx="1040" cy="180" r="36"/>
+    <circle cx="1060" cy="300" r="36"/>
+    <path d="M952 220 L1004 192"/>
+    <path d="M952 220 L1024 274"/>
+    <path d="M1076 214 L1088 264"/>
+  </g>
+</svg>

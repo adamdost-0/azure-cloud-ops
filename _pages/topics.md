@@ -6,11 +6,12 @@ layout: single
 
 Pick a track:
 
-- [AI + Automation](/categories/#ai-automation)
-- [Networking](/categories/#networking)
-- [Governance / Guardrails](/categories/#governance-guardrails)
-- [IaC (Bicep)](/categories/#iac-bicep)
-- [Security](/categories/#security)
-- [Operations](/categories/#operations)
+1) **AI + Automation** — [/topics/ai-automation/](/topics/ai-automation/)
+2) **Networking** — [/topics/networking/](/topics/networking/)
+3) **Governance / Guardrails** — [/topics/governance-guardrails/](/topics/governance-guardrails/)
+4) **IaC (Bicep)** — [/topics/iac-bicep/](/topics/iac-bicep/)
+5) **Security** — [/topics/security/](/topics/security/)
+6) **Operations** — [/topics/operations/](/topics/operations/)
 
-> Tip: Each topic page is just a filter over posts. If you want a curated “Start here” list per topic, we can add that next.
+If you prefer the raw category listing:
+- [/categories/](/categories/)
