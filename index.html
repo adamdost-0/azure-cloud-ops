@@ -1,7 +1,66 @@
 ---
-# You don't need to edit this file, it's empty on purpose.
-# Edit theme's home layout instead if you wanna make some changes
-# See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 layout: home
 author_profile: true
+header:
+  overlay_color: "#000"
+  overlay_filter: "0.55"
+  # You can swap this to a real hero image later (recommended for share polish PR)
+  # overlay_image: /assets/images/hero.jpg
+excerpt: "Principal Azure Cloud Architect focused on AI, automation, and networking. Guardrails-first, production-ready." 
+
+feature_row:
+  - image_path: /assets/images/bicep-mermaid-output.svg
+    alt: "AI + Automation"
+    title: "AI + Automation"
+    excerpt: "Practical automation patterns and AI-enabled workflows you can reuse."
+    url: /categories/#ai-automation
+    btn_label: "Explore"
+    btn_class: "btn--primary"
+  - image_path: /assets/images/bicep-mermaid-output.svg
+    alt: "Networking"
+    title: "Networking"
+    excerpt: "Hub-spoke, private endpoints, DNS, and secure connectivity patterns."
+    url: /categories/#networking
+    btn_label: "Explore"
+    btn_class: "btn--primary"
+  - image_path: /assets/images/bicep-mermaid-output.svg
+    alt: "Governance / Guardrails"
+    title: "Governance / Guardrails"
+    excerpt: "Policy-as-code and guardrails so production doesn’t start with compromises."
+    url: /categories/#governance-guardrails
+    btn_label: "Explore"
+    btn_class: "btn--primary"
+
+feature_row2:
+  - image_path: /assets/images/bicep-mermaid-output.svg
+    alt: "IaC (Bicep)"
+    title: "IaC (Bicep)"
+    excerpt: "Bicep-first infrastructure patterns with real code and validation steps."
+    url: /categories/#iac-bicep
+    btn_label: "Explore"
+    btn_class: "btn--primary"
+  - image_path: /assets/images/bicep-mermaid-output.svg
+    alt: "Security"
+    title: "Security"
+    excerpt: "Secure-by-default identity, networking, and platform controls."
+    url: /categories/#security
+    btn_label: "Explore"
+    btn_class: "btn--primary"
+  - image_path: /assets/images/bicep-mermaid-output.svg
+    alt: "Operations"
+    title: "Operations"
+    excerpt: "Runbooks, monitoring, reliability, and practical ops learnings."
+    url: /categories/#operations
+    btn_label: "Explore"
+    btn_class: "btn--primary"
 ---
+
+{% include feature_row %}
+{% include feature_row id="feature_row2" %}
+
+## Featured
+
+- Start here: [/projects/](/projects/)
+- Contact: [/contact/](/contact/)
+- Browse: [/topics/](/topics/)
+
