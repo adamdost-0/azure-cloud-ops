@@ -9,3 +9,10 @@ Thanks for your interest in contributing!
 
 ## Security
 If you believe you’ve found a security issue, please avoid public disclosure. Open a private report if possible.
+
+## Writing posts
+
+Use the engineering notebook template:
+- `docs/post-template.md`
+
+Guideline: keep posts practical (code + commands + validation), and call out guardrails/gotchas.
