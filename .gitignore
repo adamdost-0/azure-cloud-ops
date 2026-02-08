@@ -31,6 +31,11 @@ vars.tfvars
 # example: *tfplan*
 Gemfile.lock
 
+# Jekyll build artifacts / local bundler
+_site/
+vendor/
+.bundle/
+
 .DS_Store
 
 # myAppPage

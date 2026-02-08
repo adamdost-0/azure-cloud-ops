@@ -13,9 +13,9 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Principal Azure Cloud Architect
+title: Adam Dost
 email: adamd125@gmail.com
-twitter_username:twitter_username: aadost1
+twitter_username: aadost1
 github_username: adamdost-microsoft
 minimal_mistakes_skin: default
 search: true
@@ -57,7 +57,7 @@ plugins:
 author:
   name   : "Adam Dost"
   avatar : "/assets/images/background.jpeg"
-  bio    : "Principal Azure Cloud Architect focused on AI, automation, and networking. I design and ship secure-by-default solutions with guardrails so production doesn't start with compromises."
+  bio    : "Practical Azure engineering (IaC, networking, security). Guardrails-first, production-ready."
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"
