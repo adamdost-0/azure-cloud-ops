@@ -2,5 +2,5 @@
 title: "Posts"
 layout: posts
 permalink: /posts/
-author_profile: true
+author_profile: false
 ---
