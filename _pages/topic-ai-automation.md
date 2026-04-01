@@ -4,10 +4,25 @@ permalink: /topics/ai-automation/
 layout: single
 ---
 
-## Start here
+AI-enabled workflows and automation are central to how platform teams operate at scale. This track covers practical patterns — from Azure OpenAI integration to automation runbooks and CI/CD-driven compliance enforcement.
 
-- (Coming next) 1–3 featured posts that demonstrate real AI/automation work with code + validation.
+## Coming soon
+
+Dedicated posts on AI and automation are in progress. Focus areas include:
+
+- **Azure OpenAI integration:** Deployment patterns, network isolation, managed identity auth, and responsible AI guardrails
+- **Workflow automation:** Logic Apps, Azure Functions, and Event Grid-driven automation pipelines
+- **AI-enabled operations:** Using LLMs for log triage, policy review, and runbook generation
+- **CI/CD guardrails:** Pipeline-enforced policy compliance, KICS scanning integration, and automated What-If runs
+- **GitHub Actions + Azure:** End-to-end IaC deployment workflows with OIDC authentication
+
+## Related posts
+
+These posts demonstrate automation and pipeline thinking applied to IaC and security:
+
+- [Securing my IaC with Checkmarx's KICS]({% post_url 2022-03-20-How-to-use-KICS-to-keep-you-safe %}) — Integrating static analysis into deployment pipelines
+- [Securing Azure Deployments with Azure Policy]({% post_url 2022-07-31-Securing-Azure-Deployments %}) — Policy-as-code for automated, continuous enforcement
 
 ## Browse all posts
 
-- Category view: [/categories/#ai-automation](/categories/#ai-automation)
+- All posts: [/posts/](/posts/)
