@@ -6,9 +6,9 @@ layout: single
 
 Networking is the connective tissue of every Azure platform. Getting it right means reliable, private, and well-segmented data paths from edge to resource. This track covers hub-spoke topology, private endpoint DNS resolution, firewall patterns, and secure connectivity to on-premises.
 
-## Coming soon
+## Current focus
 
-Dedicated networking posts are in progress. Topics will include:
+Dedicated networking posts are being expanded. This track is organized around the patterns below:
 
 - **Hub-spoke topology:** Core hub design, spoke peering, forced tunneling, and UDR patterns
 - **Private endpoints + DNS:** Private DNS zone architecture, conditional forwarding, and resolver chains for hybrid environments

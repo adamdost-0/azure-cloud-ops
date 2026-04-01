@@ -7,7 +7,7 @@ layout: single
 Best ways to reach me:
 
 - **LinkedIn:** https://www.linkedin.com/in/adamadost
-- **Email:** Adam.dost@adost.dev
+- **Email:** [{{ site.email }}](mailto:{{ site.email }})
 
 **Location:** National Capital Region
 

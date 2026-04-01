@@ -14,11 +14,16 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Adam Dost
+description: Enterprise Azure architecture, platform engineering, and operations guidance.
 email: adamd125@gmail.com
 twitter_username: aadost1
 github_username: adamdost-microsoft
 minimal_mistakes_skin: default
 search: true
+locale: en-US
+url: https://cloud.adost.dev
+baseurl: ""
+masthead_title: "Azure Cloud Ops"
 
 # Build settings
 markdown: kramdown
@@ -56,8 +61,10 @@ plugins:
 
 author:
   name   : "Adam Dost"
-  avatar : "/assets/images/background.jpeg"
-  bio    : "Practical Azure engineering (IaC, networking, security). Guardrails-first, production-ready."
+  avatar : "/assets/images/bio-photo.jpg"
+  bio    : "Microsoft Principal Architect focused on Azure landing zones, secure platforms, and operationally sound delivery."
+  location: "Maryland, USA"
+  employer: "Microsoft"
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"
@@ -69,7 +76,7 @@ author:
       icon: "fab fa-fw fa-github"
       url: "https://github.com/adamdost-0"
     - label: "LinkedIn"
-      icon: "fab fa-linkedin"
+      icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/adamadost/"    
 
 
@@ -82,7 +89,7 @@ footer:
       icon: "fab fa-fw fa-github"
       url: "https://github.com/adamdost-0"
     - label: "LinkedIn"
-      icon: "fab fa-linkedin"
+      icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/adamadost/"    
 
 
@@ -99,6 +106,8 @@ defaults:
       comments: true
       share: true
       related: true
+      toc: true
+      toc_sticky: true
   # _pages
   - scope:
       path: "_pages"
@@ -106,6 +115,8 @@ defaults:
     values:
       layout: single
       author_profile: true
+      toc: true
+      toc_sticky: true
 
 category_archive:
   type: liquid

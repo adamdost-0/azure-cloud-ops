@@ -1,0 +1,250 @@
+---
+# Only the main Sass file needs front matter
+---
+
+@import "minimal-mistakes/skins/default";
+@import "minimal-mistakes";
+
+:root {
+  --azure-ink: #0f172a;
+  --azure-slate: #334155;
+  --azure-line: #dbe4ee;
+  --azure-surface: #f8fbff;
+  --azure-accent: #0067b8;
+  --azure-accent-deep: #004f8c;
+  --azure-highlight: #e0f2fe;
+  --azure-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+body {
+  color: var(--azure-ink);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+
+.masthead {
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid var(--azure-line);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+}
+
+.greedy-nav {
+  background: transparent;
+}
+
+.greedy-nav .site-title,
+.greedy-nav a {
+  color: var(--azure-ink);
+}
+
+.greedy-nav .site-title {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.archive__subtitle,
+.page__meta,
+.notice,
+.page__content p,
+.page__content li {
+  color: var(--azure-slate);
+}
+
+.page__content {
+  font-size: 1.02rem;
+}
+
+.page__hero--overlay {
+  padding: 5.5rem 0 4.5rem;
+  background-position: center;
+}
+
+.page__hero--overlay .page__title,
+.page__hero--overlay .page__lead,
+.page__hero--overlay .page__excerpt {
+  text-shadow: none;
+}
+
+.page__hero--overlay .page__title {
+  font-size: clamp(2.3rem, 5vw, 4rem);
+  line-height: 1.05;
+  max-width: 12ch;
+}
+
+.page__hero--overlay .page__excerpt {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  max-width: 52rem;
+}
+
+.btn--primary,
+.btn--success,
+.btn--info,
+.btn--warning {
+  background-color: var(--azure-accent);
+}
+
+.btn--primary:hover,
+.btn--success:hover,
+.btn--info:hover,
+.btn--warning:hover {
+  background-color: var(--azure-accent-deep);
+}
+
+.btn--light-outline {
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  color: #fff;
+}
+
+.btn--light-outline:hover {
+  border-color: #fff;
+  color: #fff;
+}
+
+.author__avatar img,
+.author__content,
+.toc,
+.archive__item,
+.landing-card,
+.landing-band,
+.landing-posts li {
+  border-radius: 18px;
+}
+
+.author__avatar img {
+  border: 4px solid #fff;
+  box-shadow: var(--azure-shadow);
+}
+
+.author__content,
+.toc,
+.archive__item,
+.landing-card,
+.landing-band,
+.landing-posts li {
+  border: 1px solid var(--azure-line);
+  box-shadow: var(--azure-shadow);
+  background: #fff;
+}
+
+.toc .nav__title {
+  background: var(--azure-ink);
+}
+
+.layout--splash .feature__wrapper {
+  margin-bottom: 1rem;
+}
+
+.feature__item .archive__item {
+  height: 100%;
+  padding: 1.25rem;
+}
+
+.feature__item .archive__item-teaser {
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--azure-surface);
+}
+
+.feature__item .archive__item-title {
+  margin-top: 0.4rem;
+}
+
+.feature__item .btn {
+  margin-top: 0.5rem;
+}
+
+.landing-band {
+  margin: 2rem 0;
+  padding: 1.5rem 1.75rem;
+  background: linear-gradient(135deg, #f8fbff 0%, #eef6ff 100%);
+}
+
+.landing-band--cta {
+  background: linear-gradient(135deg, #0f172a 0%, #0b3b69 100%);
+  color: #fff;
+}
+
+.landing-band--cta p {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.landing-lead {
+  font-size: 1.08rem;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+
+.landing-grid,
+.landing-posts {
+  display: grid;
+  gap: 1rem;
+}
+
+.landing-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin: 1.5rem 0 2rem;
+}
+
+.landing-card {
+  padding: 1.35rem;
+  position: relative;
+}
+
+.landing-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  border-radius: 18px 0 0 18px;
+  background: linear-gradient(180deg, var(--azure-accent), #38bdf8);
+}
+
+.landing-card h3 {
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.landing-card p:last-child,
+.landing-posts p:last-child {
+  margin-bottom: 0;
+}
+
+.landing-card__eyebrow {
+  display: inline-block;
+  margin-left: 0.65rem;
+  color: var(--azure-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.landing-posts {
+  list-style: none;
+  margin: 1.25rem 0 2rem;
+  padding: 0;
+}
+
+.landing-posts li {
+  padding: 1.15rem 1.25rem;
+}
+
+.landing-posts a {
+  font-weight: 700;
+}
+
+.landing-posts__meta {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--azure-accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .page__hero--overlay {
+    padding: 4.5rem 0 3.5rem;
+  }
+}

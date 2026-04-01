@@ -6,9 +6,9 @@ layout: single
 
 AI-enabled workflows and automation are central to how platform teams operate at scale. This track covers practical patterns — from Azure OpenAI integration to automation runbooks and CI/CD-driven compliance enforcement.
 
-## Coming soon
+## Current focus
 
-Dedicated posts on AI and automation are in progress. Focus areas include:
+Dedicated long-form posts in this area are being added. In the meantime, this track is centered on the practical patterns below:
 
 - **Azure OpenAI integration:** Deployment patterns, network isolation, managed identity auth, and responsible AI guardrails
 - **Workflow automation:** Logic Apps, Azure Functions, and Event Grid-driven automation pipelines
