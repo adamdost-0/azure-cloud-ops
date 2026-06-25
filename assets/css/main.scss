@@ -90,10 +90,11 @@ a {
   position: relative;
   overflow: hidden;
   isolation: isolate;
+  // Minimal Mistakes emits an inline empty url() when overlay_image is absent.
   background:
     radial-gradient(circle at 82% 18%, rgba(56, 189, 248, 0.24), transparent 24rem),
     radial-gradient(circle at 12% 82%, rgba(14, 165, 233, 0.18), transparent 20rem),
-    linear-gradient(135deg, #0f172a 0%, #0b3b69 56%, #0067b8 100%);
+    linear-gradient(135deg, #0f172a 0%, #0b3b69 56%, #0067b8 100%) !important;
 }
 
 .landing-page .page__hero--overlay::after {
