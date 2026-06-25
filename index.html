@@ -6,8 +6,7 @@ classes:
   - landing-page
 header:
   overlay_color: "#0f172a"
-  overlay_filter: "0.6"
-  overlay_image: /assets/images/background.jpeg
+  overlay_filter: "0.68"
   actions:
     - label: "Review project work"
       url: "/projects/"
@@ -64,11 +63,28 @@ feature_row2:
     btn_class: "btn--primary"
 ---
 
-<div class="landing-band">
-  <p class="landing-lead">
-    I help teams turn Azure intent into operating platforms: landing zones, secure networking, IaC delivery,
-    and governance guardrails that hold up under real production pressure.
-  </p>
+<div class="landing-intro">
+  <div class="landing-band landing-band--intro">
+    <p class="landing-lead">
+      I help teams turn Azure intent into operating platforms: landing zones, secure networking, IaC delivery,
+      and governance guardrails that hold up under real production pressure.
+    </p>
+  </div>
+
+  <aside class="landing-profile-card" aria-label="Profile summary">
+    <img
+      class="landing-profile-card__avatar"
+      src="{{ '/assets/images/bio-photo.jpg' | relative_url }}"
+      width="128"
+      height="128"
+      alt="Adam Dost"
+    >
+    <div class="landing-profile-card__body">
+      <span class="landing-card__eyebrow">Profile</span>
+      <h2>Adam Dost</h2>
+      <p>Microsoft Principal Architect focused on Azure landing zones, secure platforms, and operationally sound delivery.</p>
+    </div>
+  </aside>
 </div>
 
 <div class="landing-grid">
